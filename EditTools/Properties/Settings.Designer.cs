@@ -22,5 +22,35 @@ namespace EditTools.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public string mindist {
+            get {
+                return ((string)(this["mindist"]));
+            }
+            set {
+                this["mindist"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>and/or</string>
+  <string>AER style eschews ""and/or."" It introduces ambiguity. Either use ""or both"" or ""but not both.""</string>
+  <string>(s)</string>
+  <string>AER style does not support the use of ""(s)."" It is unnecessary. Both the Alberta and Canada Interpretation Acts state that words in the singular include the plural and vice-versa. Just use the plural.</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection boilerplate {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["boilerplate"]));
+            }
+            set {
+                this["boilerplate"] = value;
+            }
+        }
     }
 }
