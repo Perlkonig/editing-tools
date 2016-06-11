@@ -10,6 +10,8 @@ I'm happy to answer questions, and I'm always open to suggestions for improvemen
 
 Good luck!
 
+P.S. Do *not* confuse this with the most excellent ["Edit Tools" by wordsnSync](http://www.wordsnsync.com/). Also check out [PerfectIt](http://www.intelligentediting.com/).
+
 =====
 
 Released under the MIT license except where noted (the metaphone code).
