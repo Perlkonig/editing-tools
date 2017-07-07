@@ -14,5 +14,8 @@
   &lt;string&gt;AER style does not support the use of "(s)." It is unnecessary. Both the Alberta and Canada Interpretation Acts state that words in the singular include the plural and vice-versa. Just use the plural.&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
+    <Setting Name="lastlang" Type="System.String" Scope="User">
+      <Value Profile="(Default)">English (Canada)</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

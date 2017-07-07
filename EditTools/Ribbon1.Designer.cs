@@ -40,13 +40,15 @@
             this.btn_Export = this.Factory.CreateRibbonButton();
             this.btn_Import = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
-            this.group3 = this.Factory.CreateRibbonGroup();
-            this.group4 = this.Factory.CreateRibbonGroup();
             this.btn_FixLang = this.Factory.CreateRibbonButton();
+            this.group3 = this.Factory.CreateRibbonGroup();
             this.btn_WordList = this.Factory.CreateRibbonButton();
             this.btn_ProperNouns = this.Factory.CreateRibbonButton();
+            this.group4 = this.Factory.CreateRibbonGroup();
             this.dd_Boilerplate = this.Factory.CreateRibbonDropDown();
             this.btn_ApplyBoilerplate = this.Factory.CreateRibbonButton();
+            this.dd_Langs = this.Factory.CreateRibbonDropDown();
+            this.btn_SingData = this.Factory.CreateRibbonButton();
             this.EditTools.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -91,29 +93,24 @@
             // 
             // group2
             // 
+            this.group2.Items.Add(this.dd_Langs);
             this.group2.Items.Add(this.btn_FixLang);
             this.group2.Label = "Editing";
             this.group2.Name = "group2";
+            // 
+            // btn_FixLang
+            // 
+            this.btn_FixLang.Label = "Apply Language";
+            this.btn_FixLang.Name = "btn_FixLang";
+            this.btn_FixLang.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_FixLang_Click);
             // 
             // group3
             // 
             this.group3.Items.Add(this.btn_WordList);
             this.group3.Items.Add(this.btn_ProperNouns);
+            this.group3.Items.Add(this.btn_SingData);
             this.group3.Label = "Proofing";
             this.group3.Name = "group3";
-            // 
-            // group4
-            // 
-            this.group4.Items.Add(this.dd_Boilerplate);
-            this.group4.Items.Add(this.btn_ApplyBoilerplate);
-            this.group4.Label = "Boilerplate";
-            this.group4.Name = "group4";
-            // 
-            // btn_FixLang
-            // 
-            this.btn_FixLang.Label = "Fix Language";
-            this.btn_FixLang.Name = "btn_FixLang";
-            this.btn_FixLang.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_FixLang_Click);
             // 
             // btn_WordList
             // 
@@ -127,16 +124,38 @@
             this.btn_ProperNouns.Name = "btn_ProperNouns";
             this.btn_ProperNouns.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ProperNouns_Click);
             // 
+            // group4
+            // 
+            this.group4.Items.Add(this.dd_Boilerplate);
+            this.group4.Items.Add(this.btn_ApplyBoilerplate);
+            this.group4.Label = "Boilerplate";
+            this.group4.Name = "group4";
+            // 
             // dd_Boilerplate
             // 
             this.dd_Boilerplate.Label = "Comments";
             this.dd_Boilerplate.Name = "dd_Boilerplate";
+            this.dd_Boilerplate.ShowLabel = false;
+            this.dd_Boilerplate.SizeString = "WWWWWWWWWWWWWWW";
             // 
             // btn_ApplyBoilerplate
             // 
-            this.btn_ApplyBoilerplate.Label = "Apply";
+            this.btn_ApplyBoilerplate.Label = "Apply Comment";
             this.btn_ApplyBoilerplate.Name = "btn_ApplyBoilerplate";
             this.btn_ApplyBoilerplate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ApplyBoilerplate_Click);
+            // 
+            // dd_Langs
+            // 
+            this.dd_Langs.Label = "Languages";
+            this.dd_Langs.Name = "dd_Langs";
+            this.dd_Langs.ShowLabel = false;
+            this.dd_Langs.SizeString = "WWWWWWWWWWWWWWW";
+            // 
+            // btn_SingData
+            // 
+            this.btn_SingData.Label = "Find Singular Data";
+            this.btn_SingData.Name = "btn_SingData";
+            this.btn_SingData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_SingData_Click);
             // 
             // Ribbon1
             // 
@@ -173,6 +192,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ProperNouns;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_Boilerplate;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ApplyBoilerplate;
+        internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_Langs;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SingData;
     }
 
     partial class ThisRibbonCollection

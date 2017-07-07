@@ -7,13 +7,25 @@ using Word = Microsoft.Office.Interop.Word;
 using Microsoft.Office.Tools.Ribbon;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
+using System.IO;
+using edu.stanford.nlp.tagger.maxent;
+using edu.stanford.nlp.ling;
+using java.util;
+using edu.stanford.nlp.parser.lexparser;
+using edu.stanford.nlp.process;
+using edu.stanford.nlp.trees;
 
 namespace EditTools
 {
     public partial class Ribbon1
     {
+        public edu.stanford.nlp.tagger.maxent.MaxentTagger tagger;
+        public edu.stanford.nlp.parser.lexparser.LexicalizedParser lp;
+
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
+            //Boilerplate
             StringCollection bps = Properties.Settings.Default.boilerplate;
             List<string> keys = new List<string>(); ;
             for (int i = 0; i < bps.Count; i++)
@@ -23,14 +35,49 @@ namespace EditTools
                     keys.Add(bps[i]);
                 }
             }
-
             keys.Sort();
             foreach (string key in keys)
             {
                 RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
                 item.Label = key;
-                this.dd_Boilerplate.Items.Add(item);
+                dd_Boilerplate.Items.Add(item);
             }
+
+            //Languages
+            Word.Languages langs = Globals.ThisAddIn.Application.Languages;
+            List<Tuple<string, Word.Language>> langlist = new List<Tuple<string, Word.Language>>();
+            foreach (Word.Language lang in langs)
+            {
+                langlist.Add(new Tuple<string, Word.Language>(lang.NameLocal, lang));
+            }
+            langlist.Sort((x,y) => x.Item1.CompareTo(y.Item1));
+            foreach (Tuple<string, Word.Language> lang in langlist)
+            {
+                RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                item.Label = lang.Item1;
+                item.Tag = lang.Item2.ID;
+                dd_Langs.Items.Add(item);
+                if (lang.Item1 == Properties.Settings.Default.lastlang)
+                {
+                    dd_Langs.SelectedItem = item;
+                }
+            }
+
+            //POSTagger
+            Debug.WriteLine("Loading tagger model...");
+            MemoryStream _stream = new MemoryStream(Properties.Resources.posmodel);
+            java.io.InputStream model = new ikvm.io.InputStreamWrapper(_stream);
+            tagger = new MaxentTagger(model);
+            Debug.WriteLine("Model loaded.");
+
+            //Typed Dependencies
+            //Debug.WriteLine("Loading lexical parser model...");
+            //_stream = new MemoryStream(Properties.Resources.englishPCFG_ser);
+            //var isw = new ikvm.io.InputStreamWrapper(_stream);
+            //var gzs = new java.util.zip.GZIPInputStream(isw);
+            //var ois = new java.io.ObjectInputStream(gzs);
+            //lp = LexicalizedParser.loadModel(ois);
+            //Debug.WriteLine("Model loaded.");
         }
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
@@ -49,13 +96,16 @@ namespace EditTools
         {
             Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
 
+            RibbonDropDownItem item = dd_Langs.SelectedItem;
+            Properties.Settings.Default.lastlang = item.Label;
+            Properties.Settings.Default.Save();
             foreach (Word.Range rng in TextHelpers.GetText(doc))
             {
-                rng.LanguageID = Word.WdLanguageID.wdEnglishCanadian;
+                rng.LanguageID = (Word.WdLanguageID) item.Tag;
                 rng.NoProofing = 0;
             }
 
-            MessageBox.Show("Language change complete.");
+            MessageBox.Show("All text marked as '"+ item.Label +"'.");
         }
 
         private void btn_Export_Click(object sender, RibbonControlEventArgs e)
@@ -269,6 +319,8 @@ namespace EditTools
 
             //Create new document
             Word.Document newdoc = Globals.ThisAddIn.Application.Documents.Add();
+            Word.View view = Globals.ThisAddIn.Application.ActiveWindow.View;
+            view.DisplayPageBoundaries = false;
             Word.Paragraph pgraph;
 
             //Intro text
@@ -287,10 +339,12 @@ namespace EditTools
             pgraph.Range.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
             Word.Section sec = newdoc.Sections[2];
             sec.PageSetup.TextColumns.SetCount(2);
+            sec.PageSetup.TextColumns.LineBetween = -1;
 
             //Distance
             pgraph = newdoc.Content.Paragraphs.Add();
             pgraph.set_Style(newdoc.Styles["Heading 2"]);
+            //pgraph.KeepWithNext = 0;
             pgraph.Range.Text = "Edit Distance (" + mindist + ")\n";
 
             foreach (string key in distgroups.Keys)
@@ -302,13 +356,24 @@ namespace EditTools
 
             }
 
+            pgraph.Range.InsertBreak(Word.WdBreakType.wdPageBreak);
             //pgraph = newdoc.Content.Paragraphs.Add();
             //pgraph.Range.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
-            pgraph.Range.InsertBreak(Word.WdBreakType.wdPageBreak);
+            //Word.InlineShape line = pgraph.Range.InlineShapes.AddHorizontalLineStandard();
+            //line.Height = 2;
+            //line.Fill.Solid();
+            //line.HorizontalLineFormat.NoShade = true;
+            //line.Fill.ForeColor.RGB = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+            //line.HorizontalLineFormat.PercentWidth = 90;
+            //line.HorizontalLineFormat.Alignment = WdHorizontalLineAlignment.wdHorizontalLineAlignCenter;
+            //sec = newdoc.Sections[3];
+            //sec.PageSetup.TextColumns.SetCount(2);
+            //sec.PageSetup.TextColumns.LineBetween = -1;
 
             //Metaphone
             pgraph = newdoc.Content.Paragraphs.Add();
             pgraph.set_Style(newdoc.Styles["Heading 2"]);
+            //pgraph.KeepWithNext = 0;
             pgraph.Range.Text = "Phonetic Comparisons\n";
 
             foreach (ushort key in mpgroups.Keys)
@@ -360,6 +425,111 @@ namespace EditTools
             {
                 MessageBox.Show("An error occurred when finding your boilerplate. Please let Aaron know!");
                 return;
+            }
+        }
+
+        private void btn_SingData_Click(object sender, RibbonControlEventArgs e)
+        {
+            Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
+            Word.Paragraphs pgraphs;
+            Word.Selection sel = Globals.ThisAddIn.Application.Selection;
+            bool fromSelection = false;
+            if (sel != null && sel.Range != null && sel.Characters.Count > 1)
+            {
+                pgraphs = sel.Paragraphs;
+                fromSelection = true;
+            }
+            else
+            {
+                pgraphs = doc.Paragraphs;
+            }
+            Debug.WriteLine("From selection: " + fromSelection.ToString());
+
+            foreach (Word.Paragraph pgraph in pgraphs)
+            {
+                Word.Range rng = pgraph.Range;
+                foreach (Word.Range sentence in rng.Sentences)
+                {
+                    // POS
+                    var tsentence = MaxentTagger.tokenizeText(new java.io.StringReader(sentence.Text)).toArray();
+                    var taggedSentence = tagger.tagSentence((ArrayList) tsentence[0]);
+                    var taglist = taggedSentence.toArray();
+                    Boolean singular = false;
+                    Boolean hasdata = false;
+
+                    //First find obviously singular "data"
+                    foreach (TaggedWord entry in taglist)
+                    {
+                        if (entry.word().ToLower() == "data")
+                        {
+                            hasdata = true;
+                            if ((entry.tag() == "NN") || (entry.tag() == "NNP"))
+                            {
+                                singular = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    //Now look for plural tags with singular verbs
+                    if ( (hasdata) && (! singular) )
+                    {
+                        foreach (TaggedWord entry in taglist)
+                        {
+                            if (entry.tag() == "VBZ")
+                            {
+                                singular = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    //Highlight problematic sentences
+                    if ( (hasdata) && (singular) )
+                    {
+                        sentence.HighlightColorIndex = Word.WdColorIndex.wdGray50;
+                    }
+                }
+
+                //var sentences = MaxentTagger.tokenizeText(new java.io.StringReader(rng.Text)).toArray();
+                //foreach (ArrayList sentence in sentences)
+                //{
+                //    String origsent = String.Join(" ", sentence.toArray());
+                //    Debug.WriteLine(origsent);
+                //    var taggedSentence = tagger.tagSentence(sentence);
+                //    var taglist = taggedSentence.toArray();
+                //    foreach (TaggedWord entry in taglist)
+                //    {
+                //        if (entry.word().ToLower() == "data")
+                //        {
+                //            if ( (entry.tag() == "NN") || (entry.tag() == "NNP") )
+                //            {
+                //                Debug.WriteLine("Found singular 'data' in the following sentence: " + origsent);
+                //                TextHelpers.highlightText(pgraph.Range, "", Word.WdColorIndex.wdGray50);
+                //            }
+                //        }
+                //    }
+                //}
+
+                //// Typed Dependencies
+                //foreach (Word.Range sentence in rng.Sentences)
+                //{
+                //    var tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
+                //    var sent2Reader = new java.io.StringReader(sentence.Text);
+                //    var rawWords = tokenizerFactory.getTokenizer(sent2Reader).tokenize();
+                //    sent2Reader.close();
+                //    var tree = lp.apply(rawWords);
+
+                //    var tlp = new PennTreebankLanguagePack();
+                //    var gsf = tlp.grammaticalStructureFactory();
+                //    var gs = gsf.newGrammaticalStructure(tree);
+                //    var tdl = gs.typedDependenciesCCprocessed();
+                //    foreach (var dep in tdl.toArray())
+                //    {
+                //        Debug.WriteLine(dep);
+                //    }
+                //    Debug.WriteLine("=-=-=-=-=-");
+                //}
             }
         }
     }

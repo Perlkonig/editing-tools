@@ -164,6 +164,19 @@ namespace EditTools
             return matrix[len_orig, len_diff];
         }
 
+        public static void highlightText(Word.Range rng, string str, Word.WdColorIndex clr)
+        {
+            rng.Find.ClearFormatting();
+            rng.Find.Forward = true;
+            rng.Find.Text = str;
+            rng.Find.Execute();
+            while (rng.Find.Found)
+            {
+                rng.HighlightColorIndex = clr;
+                rng.Find.Execute();
+            }
+        }
+
         public static bool IsBalanced(string txt)
         {
             //BRACKETS FIRST
