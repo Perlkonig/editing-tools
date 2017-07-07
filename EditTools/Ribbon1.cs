@@ -12,16 +12,13 @@ using System.IO;
 using edu.stanford.nlp.tagger.maxent;
 using edu.stanford.nlp.ling;
 using java.util;
-using edu.stanford.nlp.parser.lexparser;
-using edu.stanford.nlp.process;
-using edu.stanford.nlp.trees;
 
 namespace EditTools
 {
     public partial class Ribbon1
     {
         public edu.stanford.nlp.tagger.maxent.MaxentTagger tagger;
-        public edu.stanford.nlp.parser.lexparser.LexicalizedParser lp;
+        //public edu.stanford.nlp.parser.lexparser.LexicalizedParser lp;
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
