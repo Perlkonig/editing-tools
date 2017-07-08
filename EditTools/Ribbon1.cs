@@ -528,6 +528,25 @@ namespace EditTools
                 //    Debug.WriteLine("=-=-=-=-=-");
                 //}
             }
+            MessageBox.Show("Possible uses of 'data' as a singular noun have been highlighted in grey.");
+        }
+
+        private void btn_AcceptFormatting_Click(object sender, RibbonControlEventArgs e)
+        {
+            Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
+            Word.Window win = Globals.ThisAddIn.Application.ActiveWindow;
+            Word.View view = win.View;
+
+            view.ShowComments = false;
+            view.ShowInkAnnotations = false;
+            view.ShowInsertionsAndDeletions = false;
+
+            doc.AcceptAllRevisionsShown();
+
+            view.ShowComments = true;
+            view.ShowInkAnnotations = true;
+            view.ShowInsertionsAndDeletions = true;
+            MessageBox.Show("Formatting changes have been accepted.");
         }
     }
 }

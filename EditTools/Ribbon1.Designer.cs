@@ -40,20 +40,23 @@
             this.btn_Export = this.Factory.CreateRibbonButton();
             this.btn_Import = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
+            this.dd_Langs = this.Factory.CreateRibbonDropDown();
             this.btn_FixLang = this.Factory.CreateRibbonButton();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.btn_WordList = this.Factory.CreateRibbonButton();
             this.btn_ProperNouns = this.Factory.CreateRibbonButton();
+            this.btn_SingData = this.Factory.CreateRibbonButton();
             this.group4 = this.Factory.CreateRibbonGroup();
             this.dd_Boilerplate = this.Factory.CreateRibbonDropDown();
             this.btn_ApplyBoilerplate = this.Factory.CreateRibbonButton();
-            this.dd_Langs = this.Factory.CreateRibbonDropDown();
-            this.btn_SingData = this.Factory.CreateRibbonButton();
+            this.grp_Finishing = this.Factory.CreateRibbonGroup();
+            this.btn_AcceptFormatting = this.Factory.CreateRibbonButton();
             this.EditTools.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
             this.group3.SuspendLayout();
             this.group4.SuspendLayout();
+            this.grp_Finishing.SuspendLayout();
             this.SuspendLayout();
             // 
             // EditTools
@@ -61,6 +64,7 @@
             this.EditTools.Groups.Add(this.group1);
             this.EditTools.Groups.Add(this.group2);
             this.EditTools.Groups.Add(this.group3);
+            this.EditTools.Groups.Add(this.grp_Finishing);
             this.EditTools.Groups.Add(this.group4);
             this.EditTools.Label = "Editing Tools";
             this.EditTools.Name = "EditTools";
@@ -98,6 +102,13 @@
             this.group2.Label = "Editing";
             this.group2.Name = "group2";
             // 
+            // dd_Langs
+            // 
+            this.dd_Langs.Label = "Languages";
+            this.dd_Langs.Name = "dd_Langs";
+            this.dd_Langs.ShowLabel = false;
+            this.dd_Langs.SizeString = "WWWWWWWWWWWWWWW";
+            // 
             // btn_FixLang
             // 
             this.btn_FixLang.Label = "Apply Language";
@@ -124,6 +135,12 @@
             this.btn_ProperNouns.Name = "btn_ProperNouns";
             this.btn_ProperNouns.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ProperNouns_Click);
             // 
+            // btn_SingData
+            // 
+            this.btn_SingData.Label = "Find Singular Data";
+            this.btn_SingData.Name = "btn_SingData";
+            this.btn_SingData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_SingData_Click);
+            // 
             // group4
             // 
             this.group4.Items.Add(this.dd_Boilerplate);
@@ -144,18 +161,17 @@
             this.btn_ApplyBoilerplate.Name = "btn_ApplyBoilerplate";
             this.btn_ApplyBoilerplate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ApplyBoilerplate_Click);
             // 
-            // dd_Langs
+            // grp_Finishing
             // 
-            this.dd_Langs.Label = "Languages";
-            this.dd_Langs.Name = "dd_Langs";
-            this.dd_Langs.ShowLabel = false;
-            this.dd_Langs.SizeString = "WWWWWWWWWWWWWWW";
+            this.grp_Finishing.Items.Add(this.btn_AcceptFormatting);
+            this.grp_Finishing.Label = "Finishing";
+            this.grp_Finishing.Name = "grp_Finishing";
             // 
-            // btn_SingData
+            // btn_AcceptFormatting
             // 
-            this.btn_SingData.Label = "Find Singular Data";
-            this.btn_SingData.Name = "btn_SingData";
-            this.btn_SingData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_SingData_Click);
+            this.btn_AcceptFormatting.Label = "Accept Formatting Changes";
+            this.btn_AcceptFormatting.Name = "btn_AcceptFormatting";
+            this.btn_AcceptFormatting.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AcceptFormatting_Click);
             // 
             // Ribbon1
             // 
@@ -173,6 +189,8 @@
             this.group3.PerformLayout();
             this.group4.ResumeLayout(false);
             this.group4.PerformLayout();
+            this.grp_Finishing.ResumeLayout(false);
+            this.grp_Finishing.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -194,6 +212,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ApplyBoilerplate;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_Langs;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SingData;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup grp_Finishing;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_AcceptFormatting;
     }
 
     partial class ThisRibbonCollection

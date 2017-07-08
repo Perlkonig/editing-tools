@@ -7,6 +7,7 @@ These are just a couple tools I coded for use where I work.
 Features include a
 
 * one-click language applicator,
+* one-click "accept formatting changes,"
 * proper noun discrepancy checker,
 * word list generator,
 * "singular data" finder, and
