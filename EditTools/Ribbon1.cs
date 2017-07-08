@@ -22,23 +22,7 @@ namespace EditTools
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-            //Boilerplate
-            StringCollection bps = Properties.Settings.Default.boilerplate;
-            List<string> keys = new List<string>(); ;
-            for (int i = 0; i < bps.Count; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    keys.Add(bps[i]);
-                }
-            }
-            keys.Sort();
-            foreach (string key in keys)
-            {
-                RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                item.Label = key;
-                dd_Boilerplate.Items.Add(item);
-            }
+            loadBoilerplate();
 
             //Languages
             Word.Languages langs = Globals.ThisAddIn.Application.Languages;
@@ -75,6 +59,28 @@ namespace EditTools
             //var ois = new java.io.ObjectInputStream(gzs);
             //lp = LexicalizedParser.loadModel(ois);
             //Debug.WriteLine("Model loaded.");
+        }
+
+        public void loadBoilerplate()
+        {
+            //Boilerplate
+            dd_Boilerplate.Items.Clear();
+            StringCollection bps = Properties.Settings.Default.boilerplate;
+            List<string> keys = new List<string>(); ;
+            for (int i = 0; i < bps.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    keys.Add(bps[i]);
+                }
+            }
+            keys.Sort();
+            foreach (string key in keys)
+            {
+                RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                item.Label = key;
+                dd_Boilerplate.Items.Add(item);
+            }
         }
 
         private void button1_Click(object sender, RibbonControlEventArgs e)

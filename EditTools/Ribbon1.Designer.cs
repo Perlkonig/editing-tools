@@ -34,7 +34,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.EditTools = this.Factory.CreateRibbonTab();
+            this.EditingTools = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.btn_Settings = this.Factory.CreateRibbonButton();
             this.btn_Export = this.Factory.CreateRibbonButton();
@@ -46,28 +46,28 @@
             this.btn_WordList = this.Factory.CreateRibbonButton();
             this.btn_ProperNouns = this.Factory.CreateRibbonButton();
             this.btn_SingData = this.Factory.CreateRibbonButton();
+            this.grp_Finishing = this.Factory.CreateRibbonGroup();
+            this.btn_AcceptFormatting = this.Factory.CreateRibbonButton();
             this.group4 = this.Factory.CreateRibbonGroup();
             this.dd_Boilerplate = this.Factory.CreateRibbonDropDown();
             this.btn_ApplyBoilerplate = this.Factory.CreateRibbonButton();
-            this.grp_Finishing = this.Factory.CreateRibbonGroup();
-            this.btn_AcceptFormatting = this.Factory.CreateRibbonButton();
-            this.EditTools.SuspendLayout();
+            this.EditingTools.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
             this.group3.SuspendLayout();
-            this.group4.SuspendLayout();
             this.grp_Finishing.SuspendLayout();
+            this.group4.SuspendLayout();
             this.SuspendLayout();
             // 
-            // EditTools
+            // EditingTools
             // 
-            this.EditTools.Groups.Add(this.group1);
-            this.EditTools.Groups.Add(this.group2);
-            this.EditTools.Groups.Add(this.group3);
-            this.EditTools.Groups.Add(this.grp_Finishing);
-            this.EditTools.Groups.Add(this.group4);
-            this.EditTools.Label = "Editing Tools";
-            this.EditTools.Name = "EditTools";
+            this.EditingTools.Groups.Add(this.group1);
+            this.EditingTools.Groups.Add(this.group2);
+            this.EditingTools.Groups.Add(this.group3);
+            this.EditingTools.Groups.Add(this.grp_Finishing);
+            this.EditingTools.Groups.Add(this.group4);
+            this.EditingTools.Label = "Editing Tools";
+            this.EditingTools.Name = "EditingTools";
             // 
             // group1
             // 
@@ -141,6 +141,18 @@
             this.btn_SingData.Name = "btn_SingData";
             this.btn_SingData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_SingData_Click);
             // 
+            // grp_Finishing
+            // 
+            this.grp_Finishing.Items.Add(this.btn_AcceptFormatting);
+            this.grp_Finishing.Label = "Finishing";
+            this.grp_Finishing.Name = "grp_Finishing";
+            // 
+            // btn_AcceptFormatting
+            // 
+            this.btn_AcceptFormatting.Label = "Accept Formatting Changes";
+            this.btn_AcceptFormatting.Name = "btn_AcceptFormatting";
+            this.btn_AcceptFormatting.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AcceptFormatting_Click);
+            // 
             // group4
             // 
             this.group4.Items.Add(this.dd_Boilerplate);
@@ -161,43 +173,31 @@
             this.btn_ApplyBoilerplate.Name = "btn_ApplyBoilerplate";
             this.btn_ApplyBoilerplate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ApplyBoilerplate_Click);
             // 
-            // grp_Finishing
-            // 
-            this.grp_Finishing.Items.Add(this.btn_AcceptFormatting);
-            this.grp_Finishing.Label = "Finishing";
-            this.grp_Finishing.Name = "grp_Finishing";
-            // 
-            // btn_AcceptFormatting
-            // 
-            this.btn_AcceptFormatting.Label = "Accept Formatting Changes";
-            this.btn_AcceptFormatting.Name = "btn_AcceptFormatting";
-            this.btn_AcceptFormatting.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AcceptFormatting_Click);
-            // 
             // Ribbon1
             // 
             this.Name = "Ribbon1";
             this.RibbonType = "Microsoft.Word.Document";
-            this.Tabs.Add(this.EditTools);
+            this.Tabs.Add(this.EditingTools);
             this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.Ribbon1_Load);
-            this.EditTools.ResumeLayout(false);
-            this.EditTools.PerformLayout();
+            this.EditingTools.ResumeLayout(false);
+            this.EditingTools.PerformLayout();
             this.group1.ResumeLayout(false);
             this.group1.PerformLayout();
             this.group2.ResumeLayout(false);
             this.group2.PerformLayout();
             this.group3.ResumeLayout(false);
             this.group3.PerformLayout();
-            this.group4.ResumeLayout(false);
-            this.group4.PerformLayout();
             this.grp_Finishing.ResumeLayout(false);
             this.grp_Finishing.PerformLayout();
+            this.group4.ResumeLayout(false);
+            this.group4.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        internal Microsoft.Office.Tools.Ribbon.RibbonTab EditTools;
+        internal Microsoft.Office.Tools.Ribbon.RibbonTab EditingTools;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_Settings;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_Export;

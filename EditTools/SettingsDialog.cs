@@ -56,6 +56,8 @@ namespace EditTools
             Properties.Settings.Default.boilerplate = strings;
 
             Properties.Settings.Default.Save();
+
+            Globals.Ribbons.Ribbon1.loadBoilerplate();
         }
 
         private void btn_Close_Click_1(object sender, EventArgs e)
