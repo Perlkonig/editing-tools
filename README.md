@@ -19,7 +19,7 @@ The proper noun checker looks for proper nouns that sound similar or that differ
 
 The word list generator creates an alphabetized list of all the unique words in the document. Useful for proofreading.
 
-If you find yourself making the same comments over and over, the boilerplate manager can save you some time.
+If you find yourself making the same comments over and over, the boilerplate manager can save you some time. The export/import features lets you share comment boilerplate with others or move them between machines.
 
 If you have suggestions for new tools, or if you have any questions, let me know.
 
