@@ -7,10 +7,11 @@ These are just a couple tools I coded for use where I work.
 Features include a
 
 * one-click language applicator,
-* one-click "accept formatting changes,"
-* proper noun discrepancy checker,
+* "singular data" finder,
 * word list generator,
-* "singular data" finder, and
+* word frequency generator,
+* proper noun discrepancy checker,
+* one-click "accept formatting changes," and
 * comment boilerplate manager.
 
 The language applicator applies the language to *all* text, including notes, headers, and footers. Text boxes and frames may be skipped. I haven't done extensive testing around those.

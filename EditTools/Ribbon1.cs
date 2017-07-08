@@ -554,5 +554,71 @@ namespace EditTools
             view.ShowInsertionsAndDeletions = true;
             MessageBox.Show("Formatting changes have been accepted.");
         }
+
+        private void btn_WordFreq_Click(object sender, RibbonControlEventArgs e)
+        {
+            Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
+            Dictionary<string, uint> wordlist = new Dictionary<string, uint>();
+            Regex re_allnums = new Regex(@"^\d+$");
+
+            foreach (Word.Range rng in TextHelpers.GetText(doc))
+            {
+                string txt = rng.Text;
+
+                //strip punctuation
+                txt = TextHelpers.StripPunctuation(txt);
+
+
+                string[] substrs = Regex.Split(txt, @"\s+");
+                foreach (string word in substrs)
+                {
+                    Match m = re_allnums.Match(word);
+                    if (!m.Success)
+                    {
+                        if (wordlist.ContainsKey(word)) {
+                            wordlist[word]++;
+                        } else
+                        {
+                            wordlist.Add(word, 1);
+                        }
+                    }
+
+                }
+            }
+
+            //Create new document
+            Word.Document newdoc = Globals.ThisAddIn.Application.Documents.Add();
+            Word.Paragraph pgraph;
+
+            //Intro text
+            pgraph = newdoc.Content.Paragraphs.Add();
+            pgraph.set_Style(newdoc.Styles["Heading 1"]);
+            pgraph.Range.Text = "Word Frequency List\n";
+            pgraph = newdoc.Content.Paragraphs.Add();
+            pgraph.set_Style(newdoc.Styles["Normal"]);
+            pgraph.Range.Text = "Capitalization is retained as is. That means that words that appear at the beginning of a sentence will appear capitalized. Don't forget that you can sort the table!\n";
+
+            pgraph = newdoc.Content.Paragraphs.Add();
+            pgraph.Range.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
+            Word.Section sec = newdoc.Sections[2];
+            sec.PageSetup.TextColumns.SetCount(3);
+
+            var words = wordlist.ToList();
+            words.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
+            newdoc.Tables.Add(pgraph.Range, words.Count, 2);
+            int row = 1;
+            foreach (var pair in words)
+            {
+                Word.Cell cell = newdoc.Tables[1].Cell(row, 1);
+                cell.Range.Text = pair.Key;
+                cell = newdoc.Tables[1].Cell(row, 2);
+                cell.Range.Text = pair.Value.ToString();
+                row++;
+            }
+
+            pgraph = newdoc.Content.Paragraphs.Add();
+            pgraph.Range.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
+            newdoc.GrammarChecked = true;
+        }
     }
 }

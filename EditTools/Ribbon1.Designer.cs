@@ -51,6 +51,7 @@
             this.group4 = this.Factory.CreateRibbonGroup();
             this.dd_Boilerplate = this.Factory.CreateRibbonDropDown();
             this.btn_ApplyBoilerplate = this.Factory.CreateRibbonButton();
+            this.btn_WordFreq = this.Factory.CreateRibbonButton();
             this.EditingTools.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -81,24 +82,29 @@
             // 
             this.btn_Settings.Label = "Settings";
             this.btn_Settings.Name = "btn_Settings";
+            this.btn_Settings.ScreenTip = "Add/remove/edit boilerplate and configure the edit distance for the proper noun c" +
+    "hecker";
             this.btn_Settings.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_Settings_Click);
             // 
             // btn_Export
             // 
             this.btn_Export.Label = "Export";
             this.btn_Export.Name = "btn_Export";
+            this.btn_Export.ScreenTip = "Save your boilerplate to an XML file you can back up or share";
             this.btn_Export.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_Export_Click);
             // 
             // btn_Import
             // 
             this.btn_Import.Label = "Import";
             this.btn_Import.Name = "btn_Import";
+            this.btn_Import.ScreenTip = "Import a boilerplate XML file";
             this.btn_Import.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
             // 
             // group2
             // 
             this.group2.Items.Add(this.dd_Langs);
             this.group2.Items.Add(this.btn_FixLang);
+            this.group2.Items.Add(this.btn_SingData);
             this.group2.Label = "Editing";
             this.group2.Name = "group2";
             // 
@@ -106,6 +112,8 @@
             // 
             this.dd_Langs.Label = "Languages";
             this.dd_Langs.Name = "dd_Langs";
+            this.dd_Langs.ScreenTip = "Apply selected language to the entire  document, including notes, headers and foo" +
+    "ters";
             this.dd_Langs.ShowLabel = false;
             this.dd_Langs.SizeString = "WWWWWWWWWWWWWWW";
             // 
@@ -113,13 +121,15 @@
             // 
             this.btn_FixLang.Label = "Apply Language";
             this.btn_FixLang.Name = "btn_FixLang";
+            this.btn_FixLang.ScreenTip = "Apply selected language to the entire  document, including notes, headers and foo" +
+    "ters";
             this.btn_FixLang.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_FixLang_Click);
             // 
             // group3
             // 
             this.group3.Items.Add(this.btn_WordList);
+            this.group3.Items.Add(this.btn_WordFreq);
             this.group3.Items.Add(this.btn_ProperNouns);
-            this.group3.Items.Add(this.btn_SingData);
             this.group3.Label = "Proofing";
             this.group3.Name = "group3";
             // 
@@ -127,18 +137,22 @@
             // 
             this.btn_WordList.Label = "Word List";
             this.btn_WordList.Name = "btn_WordList";
+            this.btn_WordList.ScreenTip = "Generate a list of all the unique words in the document";
             this.btn_WordList.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_WordList_Click);
             // 
             // btn_ProperNouns
             // 
-            this.btn_ProperNouns.Label = "ProperNounAlyze";
+            this.btn_ProperNouns.Label = "Check Proper Nouns";
             this.btn_ProperNouns.Name = "btn_ProperNouns";
+            this.btn_ProperNouns.ScreenTip = "Find proper nouns that sound alike or that differ by a configurable edit distance" +
+    "";
             this.btn_ProperNouns.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ProperNouns_Click);
             // 
             // btn_SingData
             // 
             this.btn_SingData.Label = "Find Singular Data";
             this.btn_SingData.Name = "btn_SingData";
+            this.btn_SingData.ScreenTip = "Find \"data\" used as a singular noun";
             this.btn_SingData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_SingData_Click);
             // 
             // grp_Finishing
@@ -164,6 +178,7 @@
             // 
             this.dd_Boilerplate.Label = "Comments";
             this.dd_Boilerplate.Name = "dd_Boilerplate";
+            this.dd_Boilerplate.ScreenTip = "Use the \"Settings\" button to add/remove/edit boilerplate";
             this.dd_Boilerplate.ShowLabel = false;
             this.dd_Boilerplate.SizeString = "WWWWWWWWWWWWWWW";
             // 
@@ -171,7 +186,15 @@
             // 
             this.btn_ApplyBoilerplate.Label = "Apply Comment";
             this.btn_ApplyBoilerplate.Name = "btn_ApplyBoilerplate";
+            this.btn_ApplyBoilerplate.ScreenTip = "Click to apply selected comment to the selected text; Use the \"Settings\" button t" +
+    "o add/remove/edit boilerplate";
             this.btn_ApplyBoilerplate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ApplyBoilerplate_Click);
+            // 
+            // btn_WordFreq
+            // 
+            this.btn_WordFreq.Label = "Word Frequency List";
+            this.btn_WordFreq.Name = "btn_WordFreq";
+            this.btn_WordFreq.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_WordFreq_Click);
             // 
             // Ribbon1
             // 
@@ -214,6 +237,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SingData;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup grp_Finishing;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_AcceptFormatting;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_WordFreq;
     }
 
     partial class ThisRibbonCollection
