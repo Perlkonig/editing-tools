@@ -13,11 +13,15 @@ Features include a
 * "singular data" finder, and
 * comment boilerplate manager.
 
+The language applicator applies the language to *all* text, including notes and headers/footers. It should also find text boxes, but Word isn't really consistent with those.
+
 The proper noun checker looks for proper nouns that sound similar or that differ by a customizeable editing distance. Useful for catching common typos in names.
 
 The word list generator creates an alphabetized list of all the unique words in the document. Useful for proofreading.
 
-If you find yourself making the same comments over and over, the boilerplate manager can save you lots of time.
+If you find yourself making the same comments over and over, the boilerplate manager can save you some time.
+
+If you have suggestions for new tools, or if you have any questions, let me know.
 
 ## "Real" Editing Tools
 
@@ -30,8 +34,6 @@ I can't guarantee that this code will work in your version of Visual Studio or W
 I'm just sharing this because a couple people asked for the code. If you find it useful, great!
 
 If you just want to see the algorithms, then you'll be most interested in the files `Ribbon1.cs` (which contains the code that runs when you click a ribbon button and describes the overall algorithms) and `TextHelpers.cs` (which contains all the little helper functions that make writing the algorithms easier).
-
-I'm happy to answer questions, and I'm always open to suggestions for improvement.
 
 Good luck!
 
