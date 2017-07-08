@@ -13,7 +13,7 @@ Features include a
 * "singular data" finder, and
 * comment boilerplate manager.
 
-The language applicator applies the language to *all* text, including notes and headers/footers. It should also find text boxes, but Word isn't really consistent with those.
+The language applicator applies the language to *all* text, including notes, headers, and footers. Text boxes and frames may be skipped. I haven't done extensive testing around those.
 
 The proper noun checker looks for proper nouns that sound similar or that differ by a customizeable editing distance. Useful for catching common typos in names.
 
