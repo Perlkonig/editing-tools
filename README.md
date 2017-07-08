@@ -12,7 +12,7 @@ Features include a
 * "singular data" finder, and
 * comment boilerplate manager.
 
-The proper noun checker looks for proper nouns that sound similar and that differ by a customizeable editing distance. Useful for catching common typos in names.
+The proper noun checker looks for proper nouns that sound similar or that differ by a customizeable editing distance. Useful for catching common typos in names.
 
 The word list generator creates an alphabetized list of all the unique words in the document. Useful for proofreading.
 
