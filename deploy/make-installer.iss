@@ -34,10 +34,10 @@
 ; The version number. It is suggested to use the semantic versionin
 ; scheme (http://semver.org), but this is not a must. This version
 ; information may contain text.
-#define SEMANTIC_VERSION "1.0.0"
+#define SEMANTIC_VERSION "1.1.0"
 
 ; The version in four-number format
-#define FOUR_NUMBER_VERSION "1.0.0.0"
+#define FOUR_NUMBER_VERSION "1.1.0.0"
 
 ; The year(s) of publication (e.g., "2014-2017")
 #define PUB_YEARS "2017"
@@ -82,7 +82,7 @@
 ; VSTOFILE is the file that needs to be written to the registry in
 ; order to activate the add-in.
 ; This is usually a file named after the Visual Studio project.
-#define VSTOFILE "EditTools.vsto"
+#define VSTOFILE "EditingTools.vsto"
 
 ; OUTPUTDIR is the directory where the installer will be saved.
 #define OUTPUTDIR "releases\"
