@@ -34,10 +34,10 @@
 ; The version number. It is suggested to use the semantic versionin
 ; scheme (http://semver.org), but this is not a must. This version
 ; information may contain text.
-#define SEMANTIC_VERSION "1.2.0"
+#define SEMANTIC_VERSION "1.2.1"
 
 ; The version in four-number format
-#define FOUR_NUMBER_VERSION "1.2.0.0"
+#define FOUR_NUMBER_VERSION "1.2.1.0"
 
 ; The year(s) of publication (e.g., "2014-2017")
 #define PUB_YEARS "2017"

@@ -448,8 +448,14 @@ namespace EditTools
             }
             Debug.WriteLine("From selection: " + fromSelection.ToString());
 
+            ProgressDialog d = new ProgressDialog();
+            d.pbMax = pgraphs.Count;
+            d.pbVal = 0;
+            d.Show();
+
             foreach (Word.Paragraph pgraph in pgraphs)
             {
+                d.pbVal++;
                 Word.Range rng = pgraph.Range;
                 foreach (Word.Range sentence in rng.Sentences)
                 {
@@ -534,6 +540,7 @@ namespace EditTools
                 //    Debug.WriteLine("=-=-=-=-=-");
                 //}
             }
+            d.Hide();
             MessageBox.Show("Possible uses of 'data' as a singular noun have been highlighted in grey.");
         }
 
@@ -557,12 +564,21 @@ namespace EditTools
 
         private void btn_WordFreq_Click(object sender, RibbonControlEventArgs e)
         {
+            ProgressDialog d = new ProgressDialog();
+            d.Show();
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
             Dictionary<string, uint> wordlist = new Dictionary<string, uint>();
             Regex re_allnums = new Regex(@"^\d+$");
 
-            foreach (Word.Range rng in TextHelpers.GetText(doc))
+            IEnumerable<Word.Range> textranges = TextHelpers.GetText(doc);
+            d.pbMax = textranges.Count();
+            d.pbVal = 0;
+            foreach (Word.Range rng in textranges)
             {
+                d.pbVal++;
                 string txt = rng.Text;
 
                 //strip punctuation
@@ -575,16 +591,23 @@ namespace EditTools
                     Match m = re_allnums.Match(word);
                     if (!m.Success)
                     {
-                        if (wordlist.ContainsKey(word)) {
-                            wordlist[word]++;
-                        } else
+                        if (word.Trim() != "")
                         {
-                            wordlist.Add(word, 1);
+                            if (wordlist.ContainsKey(word))
+                            {
+                                wordlist[word]++;
+                            }
+                            else
+                            {
+                                wordlist.Add(word, 1);
+                            }
                         }
                     }
 
                 }
             }
+            Debug.WriteLine("Counts tabulated. Time elapsed: " + watch.Elapsed.ToString());
+            watch.Restart();
 
             //Create new document
             Word.Document newdoc = Globals.ThisAddIn.Application.Documents.Add();
@@ -597,6 +620,9 @@ namespace EditTools
             pgraph = newdoc.Content.Paragraphs.Add();
             pgraph.set_Style(newdoc.Styles["Normal"]);
             pgraph.Range.Text = "Capitalization is retained as is. That means that words that appear at the beginning of a sentence will appear capitalized. Don't forget that you can sort the table!\n";
+            pgraph = newdoc.Content.Paragraphs.Add();
+            pgraph.set_Style(newdoc.Styles["Normal"]);
+            pgraph.Range.Text = "Total words found (case sensitive): "+ wordlist.Count.ToString() +"\n";
 
             pgraph = newdoc.Content.Paragraphs.Add();
             pgraph.Range.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
@@ -606,9 +632,16 @@ namespace EditTools
             var words = wordlist.ToList();
             words.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
             newdoc.Tables.Add(pgraph.Range, words.Count, 2);
+            //newdoc.Tables.Add(pgraph.Range, 1, 2);
+            newdoc.Tables[1].AutoFitBehavior(Word.WdAutoFitBehavior.wdAutoFitContent);
+            newdoc.Tables[1].AllowAutoFit = true;
+            d.pbMax = words.Count;
+            d.pbVal = 0;
             int row = 1;
             foreach (var pair in words)
             {
+                d.pbVal++;
+                //newdoc.Tables[1].Rows.Add();
                 Word.Cell cell = newdoc.Tables[1].Cell(row, 1);
                 cell.Range.Text = pair.Key;
                 cell = newdoc.Tables[1].Cell(row, 2);
@@ -619,6 +652,9 @@ namespace EditTools
             pgraph = newdoc.Content.Paragraphs.Add();
             pgraph.Range.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
             newdoc.GrammarChecked = true;
+            Debug.WriteLine("All done. Time elapsed: " + watch.Elapsed.ToString());
+            watch.Stop();
+            d.Hide();
         }
     }
 }
