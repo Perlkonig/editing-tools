@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>Editing Tools Help</title>
+    </head>
+    <body>
+        <h1>Editing Tools Help</h1>
+        <p>
+            This is the help file for <strong>version 1.3.0</strong> of the editing tools.
+        </p>
+        <p>
+            For general information about this tool, or to download the latest version, <a href="https://github.com/Perlkonig/editing-tools">visit the project's GitHub page</a>. If you have suggestions for new tools, or if you are having problems using the tool, either <a href="https://github.com/Perlkonig/editing-tools/issues">file an issue on GitHub or <a href="mailto:aaron@daltons.ca?subject=EditingTools">feel free to email me directly</a>.
+        </p>
+        <p>
+            The various tools are grouped into five categories:
+            <ul>
+                <li><a href="#settings">Settings</a></li>
+                <li><a href="#editing">Editing</a></li>
+                <li><a href="#proofing">Proofing</a></li>
+                <li><a href="#finishing">Finishing</a></li>
+                <li><a href="#boilerplate">Boilerplate</a></li>
+            </ul>
+        </p>
+
+        <a name="settings"></a>
+        <h2>Settings</h2>
+        <p>This is where you configure the the tool generally. There are five features:</p>
+        <ul>
+            <li><b>Version</b>: This tells you what version of the tool you are running. <a href="https://github.com/Perlkonig/editing-tools/releases">Visit the "Releases" section of the GitHub page</a> to download the latest version (or older versions, if you prefer).</li>
+            <li><b>Help!</b>: This opens the help file you're reading now.</li>
+            <li><b>Settings</b>: There are currently two settings you can change:
+                <ul>
+                    <li><b>Edit-distance sensitivity</b>: This is used by the "Check Proper Nouns" feature (<a href="#proofing">see the "Proofing" section</a>). The number represents the number of changes you have to make to one word to make it another word. The higher the number, the more false positives you'll get. Too low and you'll miss valid misspellings. A setting of "2" seems to me to be a good balance, but play around with it if you wish.</li>
+                    <li>
+                        <p><b>Comment boilerplate</b>: This is where you add/change/remove comment boilerplate (<a href="#boilerplate">see the "Boilerplate" section</a>).</p>
+                        <p>To add new boilerplate, click on the blank row that appears at the bottom of the list of boilerplate. Give it a helpful shortcut name (left-hand side) and then enter the full text of your desired comment (right-hand side).</p>
+                        <p>To edit a boilerplate, simply click on the entry and make the edits.</p>
+                        <p>To delete a boilerplate, select the row by clicking in the tiny cell to the far left of the row. Then just hit the Delete key on your keyboard.</p>
+                    </li>
+                </ul>
+            </li>
+            <li><b>Export</b>: This is how you can backup, migrate, or share your comment boilerplate. When clicked, it will ask you where you want the save the file. It will then create an XML file that can be read by the "Import" function.</li>
+            <li><b>Import</b>: This lets you load exported comment boilerplate. You first select the file and then you have one of three self-explanatory choices of how you want the tool to handle duplicates.</li>
+        </ul>
+
+        <a name="editing"></a>
+        <h2>Editing</h2>
+        <ul>
+            <li><b>Apply Language</b>: Applies the selected language to all the text in the body, headers, footers, and notes. It does <em>not</em> find text in text boxes. I don't know if finds text in frames.</li>
+            <li><b>Find Singular Data</b>: Where I work, "data" must always be plural, so this uses natural language processing to find (and highlight in grey) possible instances of "data" being used as a singular. <em>It will only highlight sentences that actually contain the word "data"!</em> So look at sentences around highlighted sentences to find misuses of pronouns referring to "data."</li>
+        </ul>
+
+        <a name="proofing"></a>
+        <h2>Proofing</h2>
+        <ul>
+            <li><b>Word List</b>: Creates a separate document containing all the unique words in the document. It retains capitalization. This is a great proofreading tool because it removes the meaning of the text and just gives you the individual words.</li>
+            <li><b>Word Frequency List</b>: Does the same as above but also counts the occurences of each word. It puts the list in a table, which for some reason is slow, so please be patient.</li>
+            <li><b>Check Proper Nouns</b>: This feature gets a lot of use in my day job. This tool generates a list of proper nouns and then does two comparisons: (1) a "sounds like" check and (2) an edit distance check (<a href="#settings">see the "Settings" section</a>). If it finds groups of proper nouns that are spelled differently but either sound alike or are close in spelling, it will list them in a new document. This is an excellent way to find common typos in proper names that can easily be missed in a long document.</li>
+        </ul>
+
+        <a name="finishing"></a>
+        <h2>Finishing</h2>
+        <p>This is for tools you run at the end of an editing pass.</p>
+        <ul>
+            <li><b>Accept Formatting Changes</b>: This lets you accept <em>all</em> tracked formatting changes with one click.</li>
+        </ul>
+
+        <a name="boilerplate"></a>
+        <h2>Boilerplate</h2>
+        <p>For me this is the second-most-used feature, next only to <a href="#proofing">"Check Proper Nouns."</a> If you find yourself typing similar comments over and over again, then this can save you tons of time. To add/remove/edit boilerplate, <a href="#settings">see the "Settings" section</a>.</p>
+        <ul>
+            <li><b>Apply Comment</b>: First select the text you want to comment on. Then select the short name of the comment you wish to insert. Then click the "Apply Comment" button. A new comment will be inserted containing the boilerplate. Edit as you will. It's that easy!</li>
+        </ul>
+    </body>
+</html>

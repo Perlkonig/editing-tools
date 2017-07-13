@@ -656,5 +656,20 @@ namespace EditTools
             watch.Stop();
             d.Hide();
         }
+
+        private void btn_Help_Click(object sender, RibbonControlEventArgs e)
+        {
+            System.Reflection.Assembly assemblyInfo = System.Reflection.Assembly.GetExecutingAssembly();
+            string assemblyLocation = assemblyInfo.Location;
+            Debug.WriteLine(assemblyLocation);
+
+            //CodeBase is the location of the ClickOnce deployment files
+            Uri uriCodeBase = new Uri(assemblyInfo.CodeBase);
+            string ClickOnceLocation = Path.GetDirectoryName(uriCodeBase.LocalPath.ToString());
+            Debug.WriteLine(ClickOnceLocation);
+
+            string loc = ClickOnceLocation + Path.DirectorySeparatorChar + "help.html";
+            System.Diagnostics.Process.Start(@"file:///" + loc);
+        }
     }
 }

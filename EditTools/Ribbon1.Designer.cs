@@ -42,16 +42,19 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.dd_Langs = this.Factory.CreateRibbonDropDown();
             this.btn_FixLang = this.Factory.CreateRibbonButton();
+            this.btn_SingData = this.Factory.CreateRibbonButton();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.btn_WordList = this.Factory.CreateRibbonButton();
+            this.btn_WordFreq = this.Factory.CreateRibbonButton();
             this.btn_ProperNouns = this.Factory.CreateRibbonButton();
-            this.btn_SingData = this.Factory.CreateRibbonButton();
             this.grp_Finishing = this.Factory.CreateRibbonGroup();
             this.btn_AcceptFormatting = this.Factory.CreateRibbonButton();
             this.group4 = this.Factory.CreateRibbonGroup();
             this.dd_Boilerplate = this.Factory.CreateRibbonDropDown();
             this.btn_ApplyBoilerplate = this.Factory.CreateRibbonButton();
-            this.btn_WordFreq = this.Factory.CreateRibbonButton();
+            this.lbl_Version = this.Factory.CreateRibbonLabel();
+            this.btn_Help = this.Factory.CreateRibbonButton();
+            this.lbl_Spacer1 = this.Factory.CreateRibbonLabel();
             this.EditingTools.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -72,6 +75,9 @@
             // 
             // group1
             // 
+            this.group1.Items.Add(this.lbl_Version);
+            this.group1.Items.Add(this.btn_Help);
+            this.group1.Items.Add(this.lbl_Spacer1);
             this.group1.Items.Add(this.btn_Settings);
             this.group1.Items.Add(this.btn_Export);
             this.group1.Items.Add(this.btn_Import);
@@ -125,6 +131,13 @@
     "ters";
             this.btn_FixLang.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_FixLang_Click);
             // 
+            // btn_SingData
+            // 
+            this.btn_SingData.Label = "Find Singular Data";
+            this.btn_SingData.Name = "btn_SingData";
+            this.btn_SingData.ScreenTip = "Find \"data\" used as a singular noun";
+            this.btn_SingData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_SingData_Click);
+            // 
             // group3
             // 
             this.group3.Items.Add(this.btn_WordList);
@@ -140,6 +153,12 @@
             this.btn_WordList.ScreenTip = "Generate a list of all the unique words in the document";
             this.btn_WordList.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_WordList_Click);
             // 
+            // btn_WordFreq
+            // 
+            this.btn_WordFreq.Label = "Word Frequency List";
+            this.btn_WordFreq.Name = "btn_WordFreq";
+            this.btn_WordFreq.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_WordFreq_Click);
+            // 
             // btn_ProperNouns
             // 
             this.btn_ProperNouns.Label = "Check Proper Nouns";
@@ -147,13 +166,6 @@
             this.btn_ProperNouns.ScreenTip = "Find proper nouns that sound alike or that differ by a configurable edit distance" +
     "";
             this.btn_ProperNouns.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ProperNouns_Click);
-            // 
-            // btn_SingData
-            // 
-            this.btn_SingData.Label = "Find Singular Data";
-            this.btn_SingData.Name = "btn_SingData";
-            this.btn_SingData.ScreenTip = "Find \"data\" used as a singular noun";
-            this.btn_SingData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_SingData_Click);
             // 
             // grp_Finishing
             // 
@@ -190,11 +202,21 @@
     "o add/remove/edit boilerplate";
             this.btn_ApplyBoilerplate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ApplyBoilerplate_Click);
             // 
-            // btn_WordFreq
+            // lbl_Version
             // 
-            this.btn_WordFreq.Label = "Word Frequency List";
-            this.btn_WordFreq.Name = "btn_WordFreq";
-            this.btn_WordFreq.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_WordFreq_Click);
+            this.lbl_Version.Label = "Version 1.3.0";
+            this.lbl_Version.Name = "lbl_Version";
+            // 
+            // btn_Help
+            // 
+            this.btn_Help.Label = "Help!";
+            this.btn_Help.Name = "btn_Help";
+            this.btn_Help.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_Help_Click);
+            // 
+            // lbl_Spacer1
+            // 
+            this.lbl_Spacer1.Label = " ";
+            this.lbl_Spacer1.Name = "lbl_Spacer1";
             // 
             // Ribbon1
             // 
@@ -238,6 +260,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup grp_Finishing;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_AcceptFormatting;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_WordFreq;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel lbl_Version;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_Help;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel lbl_Spacer1;
     }
 
     partial class ThisRibbonCollection
