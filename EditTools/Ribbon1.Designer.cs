@@ -36,6 +36,9 @@
         {
             this.EditingTools = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
+            this.lbl_Version = this.Factory.CreateRibbonLabel();
+            this.btn_Help = this.Factory.CreateRibbonButton();
+            this.lbl_Spacer1 = this.Factory.CreateRibbonLabel();
             this.btn_Settings = this.Factory.CreateRibbonButton();
             this.btn_Export = this.Factory.CreateRibbonButton();
             this.btn_Import = this.Factory.CreateRibbonButton();
@@ -47,14 +50,14 @@
             this.btn_WordList = this.Factory.CreateRibbonButton();
             this.btn_WordFreq = this.Factory.CreateRibbonButton();
             this.btn_ProperNouns = this.Factory.CreateRibbonButton();
+            this.edit_MinPhraseLen = this.Factory.CreateRibbonEditBox();
+            this.btn_PhraseFrequency = this.Factory.CreateRibbonButton();
             this.grp_Finishing = this.Factory.CreateRibbonGroup();
             this.btn_AcceptFormatting = this.Factory.CreateRibbonButton();
             this.group4 = this.Factory.CreateRibbonGroup();
             this.dd_Boilerplate = this.Factory.CreateRibbonDropDown();
             this.btn_ApplyBoilerplate = this.Factory.CreateRibbonButton();
-            this.lbl_Version = this.Factory.CreateRibbonLabel();
-            this.btn_Help = this.Factory.CreateRibbonButton();
-            this.lbl_Spacer1 = this.Factory.CreateRibbonLabel();
+            this.edit_MaxPhraseLen = this.Factory.CreateRibbonEditBox();
             this.EditingTools.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -83,6 +86,22 @@
             this.group1.Items.Add(this.btn_Import);
             this.group1.Label = "Settings";
             this.group1.Name = "group1";
+            // 
+            // lbl_Version
+            // 
+            this.lbl_Version.Label = "Version 1.4.0";
+            this.lbl_Version.Name = "lbl_Version";
+            // 
+            // btn_Help
+            // 
+            this.btn_Help.Label = "Help!";
+            this.btn_Help.Name = "btn_Help";
+            this.btn_Help.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_Help_Click);
+            // 
+            // lbl_Spacer1
+            // 
+            this.lbl_Spacer1.Label = " ";
+            this.lbl_Spacer1.Name = "lbl_Spacer1";
             // 
             // btn_Settings
             // 
@@ -143,6 +162,9 @@
             this.group3.Items.Add(this.btn_WordList);
             this.group3.Items.Add(this.btn_WordFreq);
             this.group3.Items.Add(this.btn_ProperNouns);
+            this.group3.Items.Add(this.edit_MinPhraseLen);
+            this.group3.Items.Add(this.edit_MaxPhraseLen);
+            this.group3.Items.Add(this.btn_PhraseFrequency);
             this.group3.Label = "Proofing";
             this.group3.Name = "group3";
             // 
@@ -166,6 +188,18 @@
             this.btn_ProperNouns.ScreenTip = "Find proper nouns that sound alike or that differ by a configurable edit distance" +
     "";
             this.btn_ProperNouns.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ProperNouns_Click);
+            // 
+            // edit_MinPhraseLen
+            // 
+            this.edit_MinPhraseLen.Label = "Min. Phrase Length";
+            this.edit_MinPhraseLen.Name = "edit_MinPhraseLen";
+            this.edit_MinPhraseLen.Text = null;
+            // 
+            // btn_PhraseFrequency
+            // 
+            this.btn_PhraseFrequency.Label = "Phrase Frequency List";
+            this.btn_PhraseFrequency.Name = "btn_PhraseFrequency";
+            this.btn_PhraseFrequency.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_PhraseFrequency_Click);
             // 
             // grp_Finishing
             // 
@@ -202,21 +236,10 @@
     "o add/remove/edit boilerplate";
             this.btn_ApplyBoilerplate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ApplyBoilerplate_Click);
             // 
-            // lbl_Version
+            // edit_MaxPhraseLen
             // 
-            this.lbl_Version.Label = "Version 1.3.0";
-            this.lbl_Version.Name = "lbl_Version";
-            // 
-            // btn_Help
-            // 
-            this.btn_Help.Label = "Help!";
-            this.btn_Help.Name = "btn_Help";
-            this.btn_Help.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_Help_Click);
-            // 
-            // lbl_Spacer1
-            // 
-            this.lbl_Spacer1.Label = " ";
-            this.lbl_Spacer1.Name = "lbl_Spacer1";
+            this.edit_MaxPhraseLen.Label = "Max. Phrase Length";
+            this.edit_MaxPhraseLen.Name = "edit_MaxPhraseLen";
             // 
             // Ribbon1
             // 
@@ -263,6 +286,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lbl_Version;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_Help;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel lbl_Spacer1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox edit_MinPhraseLen;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_PhraseFrequency;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox edit_MaxPhraseLen;
     }
 
     partial class ThisRibbonCollection

@@ -17,5 +17,11 @@
     <Setting Name="lastlang" Type="System.String" Scope="User">
       <Value Profile="(Default)">English (Canada)</Value>
     </Setting>
+    <Setting Name="minphraselen" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="maxphraselen" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

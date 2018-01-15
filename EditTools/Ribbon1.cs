@@ -43,6 +43,10 @@ namespace EditTools
                     dd_Langs.SelectedItem = item;
                 }
             }
+            uint minlen = Properties.Settings.Default.minphraselen;
+            uint maxlen = Properties.Settings.Default.maxphraselen;
+            edit_MinPhraseLen.Text = minlen.ToString();
+            edit_MaxPhraseLen.Text = maxlen.ToString();
 
             //POSTagger
             Debug.WriteLine("Loading tagger model...");
@@ -670,6 +674,93 @@ namespace EditTools
 
             string loc = ClickOnceLocation + Path.DirectorySeparatorChar + "help.html";
             System.Diagnostics.Process.Start(@"file:///" + loc);
+        }
+
+        private void btn_PhraseFrequency_Click(object sender, RibbonControlEventArgs e)
+        {
+            Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
+            uint newminlen;
+            uint newmaxlen;
+            UInt32.TryParse(edit_MinPhraseLen.Text, out newminlen);
+            UInt32.TryParse(edit_MaxPhraseLen.Text, out newmaxlen);
+            if ( (newminlen != 0) && (newmaxlen != 0) && (newminlen <= newmaxlen) )
+            {
+                Properties.Settings.Default.minphraselen = newminlen;
+                Properties.Settings.Default.maxphraselen = newmaxlen;
+                Properties.Settings.Default.Save();
+
+                Dictionary<string, uint> phrases = new Dictionary<string, uint>();
+                //Iterate through all text
+                foreach (Word.Range rng in TextHelpers.GetText(doc))
+                {
+                    //Break into sentences
+                    foreach (Word.Range sentence in rng.Sentences)
+                    {
+                        //Strip punctuation
+                        string nopunc = TextHelpers.StripPunctuation(sentence.Text);
+                        nopunc = nopunc.Replace("  ", " ");
+                        //Break into words
+                        string[] words = nopunc.Split(' ');
+                        //Extract phrases
+                        for (uint i = newminlen; i <= newmaxlen; i++)
+                        {
+                            for (int start=0; start < words.Length-i; start++)
+                            {
+                                List<string> phraselst = new List<string>();
+                                for (int idx = 0; idx < i; idx++)
+                                {
+                                    phraselst.Add(words[start + idx]);
+                                }
+                                string phrase = string.Join(" ", phraselst).ToLower();
+                                //Add to data structre
+                                if (phrases.ContainsKey(phrase))
+                                {
+                                    phrases[phrase]++;
+                                } else
+                                {
+                                    phrases[phrase] = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                //Display results
+
+                //Create new document
+                Word.Document newdoc = Globals.ThisAddIn.Application.Documents.Add();
+                Word.Paragraph pgraph;
+
+                //Intro text
+                pgraph = newdoc.Content.Paragraphs.Add();
+                pgraph.set_Style(newdoc.Styles["Heading 1"]);
+                pgraph.Range.Text = "Phrase Frequency List\n";
+                pgraph = newdoc.Content.Paragraphs.Add();
+                pgraph.set_Style(newdoc.Styles["Normal"]);
+                pgraph.Range.Text = "Punctuation (other than apostrophes) has been removed. All words have been lowercased for comparison.\n";
+
+                pgraph = newdoc.Content.Paragraphs.Add();
+                pgraph.Range.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
+                Word.Section sec = newdoc.Sections[2];
+                sec.PageSetup.TextColumns.SetCount(2);
+
+                var phraselist = phrases.Where(x => x.Value > 1).ToList();
+                phraselist.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
+                foreach (var pair in phraselist)
+                {
+                    pgraph = newdoc.Content.Paragraphs.Add();
+                    pgraph.set_Style(newdoc.Styles["Normal"]);
+                    pgraph.Range.Text = pair.Key + "\t" + pair.Value.ToString() + "\n";
+                }
+
+                pgraph = newdoc.Content.Paragraphs.Add();
+                pgraph.Range.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
+                newdoc.GrammarChecked = true;
+            }
+            else
+            {
+                MessageBox.Show("The phrase length fields must contain numbers greater than zero, and the minimum length must be less than or equal to the maximum length.");
+            }
         }
     }
 }
