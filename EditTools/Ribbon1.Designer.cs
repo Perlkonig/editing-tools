@@ -51,13 +51,14 @@
             this.btn_WordFreq = this.Factory.CreateRibbonButton();
             this.btn_ProperNouns = this.Factory.CreateRibbonButton();
             this.edit_MinPhraseLen = this.Factory.CreateRibbonEditBox();
+            this.edit_MaxPhraseLen = this.Factory.CreateRibbonEditBox();
             this.btn_PhraseFrequency = this.Factory.CreateRibbonButton();
             this.grp_Finishing = this.Factory.CreateRibbonGroup();
             this.btn_AcceptFormatting = this.Factory.CreateRibbonButton();
+            this.btn_LinkText = this.Factory.CreateRibbonButton();
             this.group4 = this.Factory.CreateRibbonGroup();
             this.dd_Boilerplate = this.Factory.CreateRibbonDropDown();
             this.btn_ApplyBoilerplate = this.Factory.CreateRibbonButton();
-            this.edit_MaxPhraseLen = this.Factory.CreateRibbonEditBox();
             this.EditingTools.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -152,10 +153,8 @@
             // 
             // btn_SingData
             // 
-            this.btn_SingData.Label = "Find Singular Data";
+            this.btn_SingData.Label = "";
             this.btn_SingData.Name = "btn_SingData";
-            this.btn_SingData.ScreenTip = "Find \"data\" used as a singular noun";
-            this.btn_SingData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_SingData_Click);
             // 
             // group3
             // 
@@ -179,6 +178,7 @@
             // 
             this.btn_WordFreq.Label = "Word Frequency List";
             this.btn_WordFreq.Name = "btn_WordFreq";
+            this.btn_WordFreq.ScreenTip = "List words in frequency order";
             this.btn_WordFreq.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_WordFreq_Click);
             // 
             // btn_ProperNouns
@@ -195,15 +195,23 @@
             this.edit_MinPhraseLen.Name = "edit_MinPhraseLen";
             this.edit_MinPhraseLen.Text = null;
             // 
+            // edit_MaxPhraseLen
+            // 
+            this.edit_MaxPhraseLen.Label = "Max. Phrase Length";
+            this.edit_MaxPhraseLen.Name = "edit_MaxPhraseLen";
+            this.edit_MaxPhraseLen.Text = null;
+            // 
             // btn_PhraseFrequency
             // 
             this.btn_PhraseFrequency.Label = "Phrase Frequency List";
             this.btn_PhraseFrequency.Name = "btn_PhraseFrequency";
+            this.btn_PhraseFrequency.ScreenTip = "List phrases of the given length in frequency order";
             this.btn_PhraseFrequency.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_PhraseFrequency_Click);
             // 
             // grp_Finishing
             // 
             this.grp_Finishing.Items.Add(this.btn_AcceptFormatting);
+            this.grp_Finishing.Items.Add(this.btn_LinkText);
             this.grp_Finishing.Label = "Finishing";
             this.grp_Finishing.Name = "grp_Finishing";
             // 
@@ -211,7 +219,15 @@
             // 
             this.btn_AcceptFormatting.Label = "Accept Formatting Changes";
             this.btn_AcceptFormatting.Name = "btn_AcceptFormatting";
+            this.btn_AcceptFormatting.ScreenTip = "Accept all formatting changes with one click";
             this.btn_AcceptFormatting.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AcceptFormatting_Click);
+            // 
+            // btn_LinkText
+            // 
+            this.btn_LinkText.Label = "Link Text";
+            this.btn_LinkText.Name = "btn_LinkText";
+            this.btn_LinkText.ScreenTip = "Add hyperlinks to instances of the same text";
+            this.btn_LinkText.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_LinkText_Click);
             // 
             // group4
             // 
@@ -235,11 +251,6 @@
             this.btn_ApplyBoilerplate.ScreenTip = "Click to apply selected comment to the selected text; Use the \"Settings\" button t" +
     "o add/remove/edit boilerplate";
             this.btn_ApplyBoilerplate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ApplyBoilerplate_Click);
-            // 
-            // edit_MaxPhraseLen
-            // 
-            this.edit_MaxPhraseLen.Label = "Max. Phrase Length";
-            this.edit_MaxPhraseLen.Name = "edit_MaxPhraseLen";
             // 
             // Ribbon1
             // 
@@ -289,6 +300,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonEditBox edit_MinPhraseLen;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_PhraseFrequency;
         internal Microsoft.Office.Tools.Ribbon.RibbonEditBox edit_MaxPhraseLen;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_LinkText;
     }
 
     partial class ThisRibbonCollection

@@ -9,16 +9,11 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.IO;
-using edu.stanford.nlp.tagger.maxent;
-using edu.stanford.nlp.ling;
-using java.util;
 
 namespace EditTools
 {
     public partial class Ribbon1
     {
-        public edu.stanford.nlp.tagger.maxent.MaxentTagger tagger;
-        //public edu.stanford.nlp.parser.lexparser.LexicalizedParser lp;
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
@@ -47,22 +42,6 @@ namespace EditTools
             uint maxlen = Properties.Settings.Default.maxphraselen;
             edit_MinPhraseLen.Text = minlen.ToString();
             edit_MaxPhraseLen.Text = maxlen.ToString();
-
-            //POSTagger
-            Debug.WriteLine("Loading tagger model...");
-            MemoryStream _stream = new MemoryStream(Properties.Resources.posmodel);
-            java.io.InputStream model = new ikvm.io.InputStreamWrapper(_stream);
-            tagger = new MaxentTagger(model);
-            Debug.WriteLine("Model loaded.");
-
-            //Typed Dependencies
-            //Debug.WriteLine("Loading lexical parser model...");
-            //_stream = new MemoryStream(Properties.Resources.englishPCFG_ser);
-            //var isw = new ikvm.io.InputStreamWrapper(_stream);
-            //var gzs = new java.util.zip.GZIPInputStream(isw);
-            //var ois = new java.io.ObjectInputStream(gzs);
-            //lp = LexicalizedParser.loadModel(ois);
-            //Debug.WriteLine("Model loaded.");
         }
 
         public void loadBoilerplate()
@@ -91,6 +70,7 @@ namespace EditTools
         {
             ImportDialog id = new ImportDialog();
             id.ShowDialog();
+            loadBoilerplate();
         }
 
         private void btn_Settings_Click(object sender, RibbonControlEventArgs e)
@@ -408,7 +388,7 @@ namespace EditTools
             //get the text from the settings
             StringCollection bps = Properties.Settings.Default.boilerplate;
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            for (int i = 0; i < bps.Count - 1; i++)
+            for (int i = 0; i < bps.Count - 1; i+=2)
             {
                 dict.Add(bps[i], bps[i + 1]);
             }
@@ -433,119 +413,6 @@ namespace EditTools
                 MessageBox.Show("An error occurred when finding your boilerplate. Please let Aaron know!");
                 return;
             }
-        }
-
-        private void btn_SingData_Click(object sender, RibbonControlEventArgs e)
-        {
-            Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
-            Word.Paragraphs pgraphs;
-            Word.Selection sel = Globals.ThisAddIn.Application.Selection;
-            bool fromSelection = false;
-            if (sel != null && sel.Range != null && sel.Characters.Count > 1)
-            {
-                pgraphs = sel.Paragraphs;
-                fromSelection = true;
-            }
-            else
-            {
-                pgraphs = doc.Paragraphs;
-            }
-            Debug.WriteLine("From selection: " + fromSelection.ToString());
-
-            ProgressDialog d = new ProgressDialog();
-            d.pbMax = pgraphs.Count;
-            d.pbVal = 0;
-            d.Show();
-
-            foreach (Word.Paragraph pgraph in pgraphs)
-            {
-                d.pbVal++;
-                Word.Range rng = pgraph.Range;
-                foreach (Word.Range sentence in rng.Sentences)
-                {
-                    // POS
-                    var tsentence = MaxentTagger.tokenizeText(new java.io.StringReader(sentence.Text)).toArray();
-                    var taggedSentence = tagger.tagSentence((ArrayList) tsentence[0]);
-                    var taglist = taggedSentence.toArray();
-                    Boolean singular = false;
-                    Boolean hasdata = false;
-
-                    //First find obviously singular "data"
-                    foreach (TaggedWord entry in taglist)
-                    {
-                        if (entry.word().ToLower() == "data")
-                        {
-                            hasdata = true;
-                            if ((entry.tag() == "NN") || (entry.tag() == "NNP"))
-                            {
-                                singular = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    //Now look for plural tags with singular verbs
-                    if ( (hasdata) && (! singular) )
-                    {
-                        foreach (TaggedWord entry in taglist)
-                        {
-                            if (entry.tag() == "VBZ")
-                            {
-                                singular = true;
-                                break;
-                            }
-                        }
-                    }
-                    
-                    //Highlight problematic sentences
-                    if ( (hasdata) && (singular) )
-                    {
-                        sentence.HighlightColorIndex = Word.WdColorIndex.wdGray50;
-                    }
-                }
-
-                //var sentences = MaxentTagger.tokenizeText(new java.io.StringReader(rng.Text)).toArray();
-                //foreach (ArrayList sentence in sentences)
-                //{
-                //    String origsent = String.Join(" ", sentence.toArray());
-                //    Debug.WriteLine(origsent);
-                //    var taggedSentence = tagger.tagSentence(sentence);
-                //    var taglist = taggedSentence.toArray();
-                //    foreach (TaggedWord entry in taglist)
-                //    {
-                //        if (entry.word().ToLower() == "data")
-                //        {
-                //            if ( (entry.tag() == "NN") || (entry.tag() == "NNP") )
-                //            {
-                //                Debug.WriteLine("Found singular 'data' in the following sentence: " + origsent);
-                //                TextHelpers.highlightText(pgraph.Range, "", Word.WdColorIndex.wdGray50);
-                //            }
-                //        }
-                //    }
-                //}
-
-                //// Typed Dependencies
-                //foreach (Word.Range sentence in rng.Sentences)
-                //{
-                //    var tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
-                //    var sent2Reader = new java.io.StringReader(sentence.Text);
-                //    var rawWords = tokenizerFactory.getTokenizer(sent2Reader).tokenize();
-                //    sent2Reader.close();
-                //    var tree = lp.apply(rawWords);
-
-                //    var tlp = new PennTreebankLanguagePack();
-                //    var gsf = tlp.grammaticalStructureFactory();
-                //    var gs = gsf.newGrammaticalStructure(tree);
-                //    var tdl = gs.typedDependenciesCCprocessed();
-                //    foreach (var dep in tdl.toArray())
-                //    {
-                //        Debug.WriteLine(dep);
-                //    }
-                //    Debug.WriteLine("=-=-=-=-=-");
-                //}
-            }
-            d.Hide();
-            MessageBox.Show("Possible uses of 'data' as a singular noun have been highlighted in grey.");
         }
 
         private void btn_AcceptFormatting_Click(object sender, RibbonControlEventArgs e)
@@ -760,6 +627,97 @@ namespace EditTools
             else
             {
                 MessageBox.Show("The phrase length fields must contain numbers greater than zero, and the minimum length must be less than or equal to the maximum length.");
+            }
+        }
+
+        private void btn_LinkText_Click(object sender, RibbonControlEventArgs e)
+        {
+            Word.Hyperlinks myLinks = Globals.ThisAddIn.Application.ActiveDocument.Hyperlinks;
+            string anchor = InputDialog.ShowDialog("What text do you want linked (case sensitive)?", "Link Text");
+            if (!String.IsNullOrEmpty(anchor))
+            {
+                string link = InputDialog.ShowDialog("Where do you want the link to point (leave blank to remove link)?", "Link Text");
+                object findText = anchor;
+                Globals.ThisAddIn.Application.Selection.Find.Execute(findText, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true, Word.WdFindWrap.wdFindAsk, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                if (Globals.ThisAddIn.Application.Selection.Find.Found)
+                {
+                    while (Globals.ThisAddIn.Application.Selection.Find.Found)
+                    {
+                        if (String.IsNullOrEmpty(link))
+                        {
+                            if (Globals.ThisAddIn.Application.Selection.Hyperlinks.Count > 0)
+                            {
+                                DialogResult result = MessageBox.Show("You entered a blank link. Do you wish to remove existing links? Click Yes to continue. Click No to ignore this one instance. Click Cancel to abort the whole linking process.", "Link Text: Confirm Removal", MessageBoxButtons.YesNoCancel);
+                                if (result == DialogResult.Yes)
+                                {
+                                    Debug.WriteLine("Removing link from the anchor '" + anchor + "'.");
+                                    foreach (Word.Hyperlink objLink in Globals.ThisAddIn.Application.Selection.Hyperlinks)
+                                    {
+                                        objLink.Delete();
+                                    }
+                                }
+                                else if (result == DialogResult.No)
+                                {
+                                    Debug.WriteLine("Skipping this instance of the anchor.");
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Aborting!");
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (Globals.ThisAddIn.Application.Selection.Hyperlinks.Count > 0)
+                            {
+                                DialogResult result = MessageBox.Show("This instance of the text is already linked. Do you want to update this link to '" + link + "'? Click Yes to proceed. Click No to skip this one instance. Click Cancel to abort the whole linking process.", "Link Text: Confirm Link", MessageBoxButtons.YesNoCancel);
+                                if (result == DialogResult.Yes)
+                                {
+                                    Debug.WriteLine("Updating link to the anchor '" + anchor + "', pointing to '" + link + "'.");
+                                    foreach (Word.Hyperlink objLink in Globals.ThisAddIn.Application.Selection.Hyperlinks)
+                                    {
+                                        objLink.Delete();
+                                    }
+                                    Word.Hyperlink mylink = myLinks.Add(Globals.ThisAddIn.Application.Selection.Range, link);
+                                }
+                                else if (result == DialogResult.No)
+                                {
+                                    Debug.WriteLine("Skipping this instance of the anchor.");
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Aborting!");
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                DialogResult result = MessageBox.Show("Do you wish to link the selected text? It will point to the following URL: '" + link + "'. Click Yes to proceed. Click No to skip this one instance. Click Cancel to abort the whole linking process.", "Link Text: Confirm Link", MessageBoxButtons.YesNoCancel);
+                                if (result == DialogResult.Yes)
+                                {
+                                    Debug.WriteLine("Adding link to the anchor '" + anchor + "', pointing to '" + link + "'.");
+                                    Word.Hyperlink mylink = myLinks.Add(Globals.ThisAddIn.Application.Selection.Range, link);
+                                }
+                                else if (result == DialogResult.No)
+                                {
+                                    Debug.WriteLine("Skipping this instance of the anchor.");
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Aborting!");
+                                    break;
+                                }
+                            }
+                        }
+                        Globals.ThisAddIn.Application.Selection.Find.Execute(findText, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true, Word.WdFindWrap.wdFindAsk, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                    }
+                    MessageBox.Show("Linking process complete.");
+                }
+                else
+                {
+                    MessageBox.Show("No instances of '" + anchor + "' found. Remember that the search is case sensitive and, if text is selected, will only search inside that text.");
+                }
             }
         }
     }

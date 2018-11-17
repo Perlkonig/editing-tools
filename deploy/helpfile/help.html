@@ -5,7 +5,7 @@
     <body>
         <h1>Editing Tools Help</h1>
         <p>
-            This is the help file for <strong>version 1.3.0</strong> of the editing tools.
+            This is the help file for <strong>version 1.4.0</strong> of the editing tools.
         </p>
         <p>
             For general information about this tool, or to download the latest version, <a href="https://github.com/Perlkonig/editing-tools">visit the project's GitHub page</a>. If you have suggestions for new tools, or if you are having problems using the tool, either <a href="https://github.com/Perlkonig/editing-tools/issues">file an issue on GitHub or <a href="mailto:aaron@daltons.ca?subject=EditingTools">feel free to email me directly</a>.
@@ -38,7 +38,7 @@
                     </li>
                 </ul>
             </li>
-            <li><b>Export</b>: This is how you can backup, migrate, or share your comment boilerplate. When clicked, it will ask you where you want the save the file. It will then create an XML file that can be read by the "Import" function.</li>
+            <li><b>Export</b>: This is how you can backup, migrate, or share your comment boilerplate. When clicked, it will ask you where you want to save the file. It will then create an XML file that can be read by the "Import" function.</li>
             <li><b>Import</b>: This lets you load exported comment boilerplate. You first select the file and then you have one of three self-explanatory choices of how you want the tool to handle duplicates.</li>
         </ul>
 
@@ -46,7 +46,6 @@
         <h2>Editing</h2>
         <ul>
             <li><b>Apply Language</b>: Applies the selected language to all the text in the body, headers, footers, and notes. It does <em>not</em> find text in text boxes. I don't know if finds text in frames.</li>
-            <li><b>Find Singular Data</b>: Where I work, "data" must always be plural, so this uses natural language processing to find (and highlight in grey) possible instances of "data" being used as a singular. <em>It will only highlight sentences that actually contain the word "data"!</em> So look at sentences around highlighted sentences to find misuses of pronouns referring to "data."</li>
         </ul>
 
         <a name="proofing"></a>
@@ -55,6 +54,7 @@
             <li><b>Word List</b>: Creates a separate document containing all the unique words in the document. It retains capitalization. This is a great proofreading tool because it removes the meaning of the text and just gives you the individual words.</li>
             <li><b>Word Frequency List</b>: Does the same as above but also counts the occurences of each word. It puts the list in a table, which for some reason is slow, so please be patient.</li>
             <li><b>Check Proper Nouns</b>: This feature gets a lot of use in my day job. This tool generates a list of proper nouns and then does two comparisons: (1) a "sounds like" check and (2) an edit distance check (<a href="#settings">see the "Settings" section</a>). If it finds groups of proper nouns that are spelled differently but either sound alike or are close in spelling, it will list them in a new document. This is an excellent way to find common typos in proper names that can easily be missed in a long document.</li>
+            <li><b>Phrase Frequency List</b>: Looks for phrases of the given lengths and produces a table listing each in frequency order. Good for finding overused phrases.</li>
         </ul>
 
         <a name="finishing"></a>
@@ -62,6 +62,7 @@
         <p>This is for tools you run at the end of an editing pass.</p>
         <ul>
             <li><b>Accept Formatting Changes</b>: This lets you accept <em>all</em> tracked formatting changes with one click.</li>
+            <li><b>Link Text</b>: I work sometimes on large documents where multiple instances of a document name is to be hyperlinked to the same destination. This tool lets you add, remove, or change a hyperlink on a specific string of characters, regardless of formatting.</li>
         </ul>
 
         <a name="boilerplate"></a>
