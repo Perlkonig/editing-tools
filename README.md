@@ -2,25 +2,7 @@
 
 ![Screen Capture](screen-capture.jpg)
 
-These are just a couple tools I coded for use where I work. 
-
-Features include a
-
-* one-click language applicator,
-* "singular data" finder,
-* word list generator,
-* word frequency generator,
-* proper noun discrepancy checker,
-* one-click "accept formatting changes," and
-* comment boilerplate manager.
-
-The language applicator applies the language to *all* text, including notes, headers, and footers. Text boxes and frames may be skipped. I haven't done extensive testing around those.
-
-The proper noun checker looks for proper nouns that sound similar or that differ by a customizeable editing distance. Useful for catching common typos in names.
-
-The word list generator creates an alphabetized list of all the unique words in the document. Useful for proofreading.
-
-If you find yourself making the same comments over and over, the boilerplate manager can save you some time. The export/import features lets you share comment boilerplate with others or move them between machines.
+These are just a couple tools I coded for use where I work. Details can be found in [it's help file](https://htmlpreview.github.io/?https://github.com/Perlkonig/editing-tools/blob/master/EditTools/help.html). To install, go to [the Releases page](https://github.com/Perlkonig/editing-tools/releases) and download and run the EXE file from the latest release. To update to a new version, uninstall the existing version first (all your settings will be saved).
 
 If you have suggestions for new tools, or if you have any questions, let me know.
 
