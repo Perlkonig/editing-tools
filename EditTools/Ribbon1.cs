@@ -720,5 +720,17 @@ namespace EditTools
                 }
             }
         }
+
+        private void btn_ChangeOwner_Click(object sender, RibbonControlEventArgs e)
+        {
+            Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
+            Word.Selection sel = Globals.ThisAddIn.Application.Selection;
+            for (var i=1; i<=sel.Comments.Count; i++)
+            {
+                var comment = sel.Comments[i];
+                comment.Author = eb_AuthorName.Text;
+                comment.Initial = eb_AuthorInit.Text;
+            }
+        }
     }
 }

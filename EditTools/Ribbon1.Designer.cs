@@ -59,6 +59,10 @@
             this.group4 = this.Factory.CreateRibbonGroup();
             this.dd_Boilerplate = this.Factory.CreateRibbonDropDown();
             this.btn_ApplyBoilerplate = this.Factory.CreateRibbonButton();
+            this.eb_AuthorName = this.Factory.CreateRibbonEditBox();
+            this.eb_AuthorInit = this.Factory.CreateRibbonEditBox();
+            this.btn_ChangeOwner = this.Factory.CreateRibbonButton();
+            this.label1 = this.Factory.CreateRibbonLabel();
             this.EditingTools.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -90,7 +94,7 @@
             // 
             // lbl_Version
             // 
-            this.lbl_Version.Label = "Version 1.4.0";
+            this.lbl_Version.Label = "Version 1.5.0";
             this.lbl_Version.Name = "lbl_Version";
             // 
             // btn_Help
@@ -212,6 +216,10 @@
             // 
             this.grp_Finishing.Items.Add(this.btn_AcceptFormatting);
             this.grp_Finishing.Items.Add(this.btn_LinkText);
+            this.grp_Finishing.Items.Add(this.label1);
+            this.grp_Finishing.Items.Add(this.eb_AuthorName);
+            this.grp_Finishing.Items.Add(this.eb_AuthorInit);
+            this.grp_Finishing.Items.Add(this.btn_ChangeOwner);
             this.grp_Finishing.Label = "Finishing";
             this.grp_Finishing.Name = "grp_Finishing";
             // 
@@ -251,6 +259,32 @@
             this.btn_ApplyBoilerplate.ScreenTip = "Click to apply selected comment to the selected text; Use the \"Settings\" button t" +
     "o add/remove/edit boilerplate";
             this.btn_ApplyBoilerplate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ApplyBoilerplate_Click);
+            // 
+            // eb_AuthorName
+            // 
+            this.eb_AuthorName.Label = "Author Name";
+            this.eb_AuthorName.Name = "eb_AuthorName";
+            this.eb_AuthorName.ScreenTip = "Full name of the author to own the comment";
+            this.eb_AuthorName.SizeString = "WWWWWWWWWWWW";
+            // 
+            // eb_AuthorInit
+            // 
+            this.eb_AuthorInit.Label = "Author Initials";
+            this.eb_AuthorInit.Name = "eb_AuthorInit";
+            this.eb_AuthorInit.ScreenTip = "The initials of the author to own the comment";
+            this.eb_AuthorInit.SizeString = "WWWWW";
+            // 
+            // btn_ChangeOwner
+            // 
+            this.btn_ChangeOwner.Label = "Change Comment Owner";
+            this.btn_ChangeOwner.Name = "btn_ChangeOwner";
+            this.btn_ChangeOwner.ScreenTip = "Change the author name and initials assigned to the selected comment";
+            this.btn_ChangeOwner.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ChangeOwner_Click);
+            // 
+            // label1
+            // 
+            this.label1.Label = " ";
+            this.label1.Name = "label1";
             // 
             // Ribbon1
             // 
@@ -301,6 +335,10 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_PhraseFrequency;
         internal Microsoft.Office.Tools.Ribbon.RibbonEditBox edit_MaxPhraseLen;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_LinkText;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel label1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox eb_AuthorName;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox eb_AuthorInit;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ChangeOwner;
     }
 
     partial class ThisRibbonCollection
