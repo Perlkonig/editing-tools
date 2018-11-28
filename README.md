@@ -1,6 +1,6 @@
 # editing-tools
 
-![Screen Capture](screen-capture.jpg)
+![Screen Capture](screen-capture.png)
 
 These are just a couple tools I coded for use where I work. Details can be found in [it's help file](https://htmlpreview.github.io/?https://github.com/Perlkonig/editing-tools/blob/master/EditTools/help.html). To install, go to [the Releases page](https://github.com/Perlkonig/editing-tools/releases) and download and run the EXE file from the latest release. To update to a new version, uninstall the existing version first (all your settings will be saved).
 

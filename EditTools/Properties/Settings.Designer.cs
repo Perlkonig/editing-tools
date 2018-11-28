@@ -12,7 +12,7 @@ namespace EditTools.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -37,13 +37,8 @@ namespace EditTools.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>and/or</string>
-  <string>AER style eschews ""and/or."" It introduces ambiguity. Either use ""or both"" or ""but not both.""</string>
-  <string>(s)</string>
-  <string>AER style does not support the use of ""(s)."" It is unnecessary. Both the Alberta and Canada Interpretation Acts state that words in the singular include the plural and vice-versa. Just use the plural.</string>
-</ArrayOfString>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" />")]
         public global::System.Collections.Specialized.StringCollection boilerplate {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["boilerplate"]));
@@ -86,6 +81,31 @@ namespace EditTools.Properties {
             }
             set {
                 this["maxphraselen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{\"double spaces\":{\"Find\":\"  \",\"Replace\":\" \",\"Wildcards\":false,\"CaseSensitive\":fal" +
+            "se,\"ReplaceAll\":true}}")]
+        public global::EditTools.Searches searches {
+            get {
+                return ((global::EditTools.Searches)(this["searches"]));
+            }
+            set {
+                this["searches"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"{""(s)"":{""Text"":""Never use \""(s)\"". Both the federal and provincial interpretation acts stipulate that the singular can be read as the plural and vice versa.""},""and/or"":{""Text"":""Never use \""and/or.\"" If clarity is critical, use constructs like \""X or Y or both\"" or \""X or Y but not both.\"" That said, in normal usage, one or the other is sufficient. Saying \""No food or drink allowed\"" does not mean you can have both. Or saying \""Lawyers and law students may not enter\"" does not mean that any one of them may.""}}")]
+        public global::EditTools.Boilerplate newboiler {
+            get {
+                return ((global::EditTools.Boilerplate)(this["newboiler"]));
+            }
+            set {
+                this["newboiler"] = value;
             }
         }
     }

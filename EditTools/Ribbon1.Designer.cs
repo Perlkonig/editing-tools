@@ -40,8 +40,14 @@
             this.btn_Help = this.Factory.CreateRibbonButton();
             this.lbl_Spacer1 = this.Factory.CreateRibbonLabel();
             this.btn_Settings = this.Factory.CreateRibbonButton();
-            this.btn_Export = this.Factory.CreateRibbonButton();
-            this.btn_Import = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.dd_Langs = this.Factory.CreateRibbonDropDown();
+            this.btn_FixLang = this.Factory.CreateRibbonButton();
+            this.label1 = this.Factory.CreateRibbonLabel();
+            this.eb_AuthorName = this.Factory.CreateRibbonEditBox();
+            this.eb_AuthorInit = this.Factory.CreateRibbonEditBox();
+            this.btn_ChangeOwner = this.Factory.CreateRibbonButton();
+            this.btn_SingData = this.Factory.CreateRibbonButton();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.btn_WordList = this.Factory.CreateRibbonButton();
             this.btn_WordFreq = this.Factory.CreateRibbonButton();
@@ -55,20 +61,18 @@
             this.group4 = this.Factory.CreateRibbonGroup();
             this.dd_Boilerplate = this.Factory.CreateRibbonDropDown();
             this.btn_ApplyBoilerplate = this.Factory.CreateRibbonButton();
-            this.group2 = this.Factory.CreateRibbonGroup();
-            this.btn_SingData = this.Factory.CreateRibbonButton();
-            this.btn_FixLang = this.Factory.CreateRibbonButton();
-            this.dd_Langs = this.Factory.CreateRibbonDropDown();
-            this.btn_ChangeOwner = this.Factory.CreateRibbonButton();
-            this.eb_AuthorInit = this.Factory.CreateRibbonEditBox();
-            this.eb_AuthorName = this.Factory.CreateRibbonEditBox();
-            this.label1 = this.Factory.CreateRibbonLabel();
+            this.btn_ManageBoiler = this.Factory.CreateRibbonButton();
+            this.group5 = this.Factory.CreateRibbonGroup();
+            this.dd_Searches = this.Factory.CreateRibbonDropDown();
+            this.btn_ExecuteSearch = this.Factory.CreateRibbonButton();
+            this.btn_ManageSearches = this.Factory.CreateRibbonButton();
             this.EditingTools.SuspendLayout();
             this.group1.SuspendLayout();
+            this.group2.SuspendLayout();
             this.group3.SuspendLayout();
             this.grp_Finishing.SuspendLayout();
             this.group4.SuspendLayout();
-            this.group2.SuspendLayout();
+            this.group5.SuspendLayout();
             this.SuspendLayout();
             // 
             // EditingTools
@@ -78,6 +82,7 @@
             this.EditingTools.Groups.Add(this.group3);
             this.EditingTools.Groups.Add(this.grp_Finishing);
             this.EditingTools.Groups.Add(this.group4);
+            this.EditingTools.Groups.Add(this.group5);
             this.EditingTools.Label = "Editing Tools";
             this.EditingTools.Name = "EditingTools";
             // 
@@ -87,14 +92,12 @@
             this.group1.Items.Add(this.btn_Help);
             this.group1.Items.Add(this.lbl_Spacer1);
             this.group1.Items.Add(this.btn_Settings);
-            this.group1.Items.Add(this.btn_Export);
-            this.group1.Items.Add(this.btn_Import);
             this.group1.Label = "Settings";
             this.group1.Name = "group1";
             // 
             // lbl_Version
             // 
-            this.lbl_Version.Label = "Version 1.5.0";
+            this.lbl_Version.Label = "Version 2.0.0";
             this.lbl_Version.Name = "lbl_Version";
             // 
             // btn_Help
@@ -116,19 +119,67 @@
     "hecker";
             this.btn_Settings.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_Settings_Click);
             // 
-            // btn_Export
+            // group2
             // 
-            this.btn_Export.Label = "Export";
-            this.btn_Export.Name = "btn_Export";
-            this.btn_Export.ScreenTip = "Save your boilerplate to an XML file you can back up or share";
-            this.btn_Export.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_Export_Click);
+            this.group2.Items.Add(this.dd_Langs);
+            this.group2.Items.Add(this.btn_FixLang);
+            this.group2.Items.Add(this.label1);
+            this.group2.Items.Add(this.eb_AuthorName);
+            this.group2.Items.Add(this.eb_AuthorInit);
+            this.group2.Items.Add(this.btn_ChangeOwner);
+            this.group2.Items.Add(this.btn_SingData);
+            this.group2.Label = "Editing";
+            this.group2.Name = "group2";
             // 
-            // btn_Import
+            // dd_Langs
             // 
-            this.btn_Import.Label = "Import";
-            this.btn_Import.Name = "btn_Import";
-            this.btn_Import.ScreenTip = "Import a boilerplate XML file";
-            this.btn_Import.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
+            this.dd_Langs.Label = "Languages";
+            this.dd_Langs.Name = "dd_Langs";
+            this.dd_Langs.ScreenTip = "Apply selected language to the entire  document, including notes, headers and foo" +
+    "ters";
+            this.dd_Langs.ShowLabel = false;
+            this.dd_Langs.SizeString = "WWWWWWWWWWWWWWW";
+            // 
+            // btn_FixLang
+            // 
+            this.btn_FixLang.Label = "Apply Language";
+            this.btn_FixLang.Name = "btn_FixLang";
+            this.btn_FixLang.ScreenTip = "Apply selected language to the entire  document, including notes, headers and foo" +
+    "ters";
+            this.btn_FixLang.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_FixLang_Click);
+            // 
+            // label1
+            // 
+            this.label1.Label = " ";
+            this.label1.Name = "label1";
+            // 
+            // eb_AuthorName
+            // 
+            this.eb_AuthorName.Label = "Author Name";
+            this.eb_AuthorName.Name = "eb_AuthorName";
+            this.eb_AuthorName.ScreenTip = "Full name of the author to own the comment";
+            this.eb_AuthorName.SizeString = "WWWWWWWWWWWW";
+            this.eb_AuthorName.Text = null;
+            // 
+            // eb_AuthorInit
+            // 
+            this.eb_AuthorInit.Label = "Author Initials";
+            this.eb_AuthorInit.Name = "eb_AuthorInit";
+            this.eb_AuthorInit.ScreenTip = "The initials of the author to own the comment";
+            this.eb_AuthorInit.SizeString = "WWWWW";
+            this.eb_AuthorInit.Text = null;
+            // 
+            // btn_ChangeOwner
+            // 
+            this.btn_ChangeOwner.Label = "Change Comment Owner";
+            this.btn_ChangeOwner.Name = "btn_ChangeOwner";
+            this.btn_ChangeOwner.ScreenTip = "Change the author name and initials assigned to the selected comment";
+            this.btn_ChangeOwner.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ChangeOwner_Click);
+            // 
+            // btn_SingData
+            // 
+            this.btn_SingData.Label = "";
+            this.btn_SingData.Name = "btn_SingData";
             // 
             // group3
             // 
@@ -207,6 +258,7 @@
             // 
             this.group4.Items.Add(this.dd_Boilerplate);
             this.group4.Items.Add(this.btn_ApplyBoilerplate);
+            this.group4.Items.Add(this.btn_ManageBoiler);
             this.group4.Label = "Boilerplate";
             this.group4.Name = "group4";
             // 
@@ -226,67 +278,41 @@
     "o add/remove/edit boilerplate";
             this.btn_ApplyBoilerplate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ApplyBoilerplate_Click);
             // 
-            // group2
+            // btn_ManageBoiler
             // 
-            this.group2.Items.Add(this.dd_Langs);
-            this.group2.Items.Add(this.btn_FixLang);
-            this.group2.Items.Add(this.label1);
-            this.group2.Items.Add(this.eb_AuthorName);
-            this.group2.Items.Add(this.eb_AuthorInit);
-            this.group2.Items.Add(this.btn_ChangeOwner);
-            this.group2.Items.Add(this.btn_SingData);
-            this.group2.Label = "Editing";
-            this.group2.Name = "group2";
+            this.btn_ManageBoiler.Label = "Manage Boilerplate";
+            this.btn_ManageBoiler.Name = "btn_ManageBoiler";
+            this.btn_ManageBoiler.ScreenTip = "Edit your saved comments";
+            this.btn_ManageBoiler.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ManageBoiler_Click);
             // 
-            // btn_SingData
+            // group5
             // 
-            this.btn_SingData.Label = "";
-            this.btn_SingData.Name = "btn_SingData";
+            this.group5.Items.Add(this.dd_Searches);
+            this.group5.Items.Add(this.btn_ExecuteSearch);
+            this.group5.Items.Add(this.btn_ManageSearches);
+            this.group5.Label = "Search && Replace";
+            this.group5.Name = "group5";
             // 
-            // btn_FixLang
+            // dd_Searches
             // 
-            this.btn_FixLang.Label = "Apply Language";
-            this.btn_FixLang.Name = "btn_FixLang";
-            this.btn_FixLang.ScreenTip = "Apply selected language to the entire  document, including notes, headers and foo" +
-    "ters";
-            this.btn_FixLang.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_FixLang_Click);
+            this.dd_Searches.Label = "Saved Searches";
+            this.dd_Searches.Name = "dd_Searches";
+            this.dd_Searches.ScreenTip = "Click the \"Manage\" button to change your saved searches";
+            this.dd_Searches.ShowLabel = false;
+            this.dd_Searches.SizeString = "WWWWWWWWWWWWWWW";
             // 
-            // dd_Langs
+            // btn_ExecuteSearch
             // 
-            this.dd_Langs.Label = "Languages";
-            this.dd_Langs.Name = "dd_Langs";
-            this.dd_Langs.ScreenTip = "Apply selected language to the entire  document, including notes, headers and foo" +
-    "ters";
-            this.dd_Langs.ShowLabel = false;
-            this.dd_Langs.SizeString = "WWWWWWWWWWWWWWW";
+            this.btn_ExecuteSearch.Label = "Execute Search";
+            this.btn_ExecuteSearch.Name = "btn_ExecuteSearch";
+            this.btn_ExecuteSearch.ScreenTip = "Click to execute selected saved search";
+            this.btn_ExecuteSearch.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ExecuteSearch_Click);
             // 
-            // btn_ChangeOwner
+            // btn_ManageSearches
             // 
-            this.btn_ChangeOwner.Label = "Change Comment Owner";
-            this.btn_ChangeOwner.Name = "btn_ChangeOwner";
-            this.btn_ChangeOwner.ScreenTip = "Change the author name and initials assigned to the selected comment";
-            this.btn_ChangeOwner.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ChangeOwner_Click);
-            // 
-            // eb_AuthorInit
-            // 
-            this.eb_AuthorInit.Label = "Author Initials";
-            this.eb_AuthorInit.Name = "eb_AuthorInit";
-            this.eb_AuthorInit.ScreenTip = "The initials of the author to own the comment";
-            this.eb_AuthorInit.SizeString = "WWWWW";
-            this.eb_AuthorInit.Text = null;
-            // 
-            // eb_AuthorName
-            // 
-            this.eb_AuthorName.Label = "Author Name";
-            this.eb_AuthorName.Name = "eb_AuthorName";
-            this.eb_AuthorName.ScreenTip = "Full name of the author to own the comment";
-            this.eb_AuthorName.SizeString = "WWWWWWWWWWWW";
-            this.eb_AuthorName.Text = null;
-            // 
-            // label1
-            // 
-            this.label1.Label = " ";
-            this.label1.Name = "label1";
+            this.btn_ManageSearches.Label = "Manage Searches";
+            this.btn_ManageSearches.Name = "btn_ManageSearches";
+            this.btn_ManageSearches.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ManageSearches_Click);
             // 
             // Ribbon1
             // 
@@ -298,14 +324,16 @@
             this.EditingTools.PerformLayout();
             this.group1.ResumeLayout(false);
             this.group1.PerformLayout();
+            this.group2.ResumeLayout(false);
+            this.group2.PerformLayout();
             this.group3.ResumeLayout(false);
             this.group3.PerformLayout();
             this.grp_Finishing.ResumeLayout(false);
             this.grp_Finishing.PerformLayout();
             this.group4.ResumeLayout(false);
             this.group4.PerformLayout();
-            this.group2.ResumeLayout(false);
-            this.group2.PerformLayout();
+            this.group5.ResumeLayout(false);
+            this.group5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -315,8 +343,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonTab EditingTools;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_Settings;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_Export;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_Import;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group4;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_WordList;
@@ -341,6 +367,11 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonEditBox eb_AuthorInit;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ChangeOwner;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SingData;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group5;
+        internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_Searches;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ExecuteSearch;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ManageSearches;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ManageBoiler;
     }
 
     partial class ThisRibbonCollection

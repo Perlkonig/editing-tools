@@ -129,6 +129,9 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -188,6 +191,18 @@
     <Compile Include="InputDialog.Designer.cs">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ManageBoiler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageBoiler.Designer.cs">
+      <DependentUpon>ManageBoiler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageSearches.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageSearches.Designer.cs">
+      <DependentUpon>ManageSearches.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +212,15 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="ImportDialog.resx">
+      <DependentUpon>ImportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageBoiler.resx">
+      <DependentUpon>ManageBoiler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageSearches.resx">
+      <DependentUpon>ManageSearches.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -240,6 +264,7 @@
     <Compile Include="SettingsDialog.Designer.cs">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsClasses.cs" />
     <Compile Include="ShortDoubleMetaphone.cs" />
     <Compile Include="TextHelpers.cs" />
     <Compile Include="ThisAddIn.cs">

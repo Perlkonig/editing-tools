@@ -31,7 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txt_ImportFile = new System.Windows.Forms.TextBox();
             this.btn_ImportSelect = new System.Windows.Forms.Button();
-            this.btn_Close = new System.Windows.Forms.Button();
+            this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_Import = new System.Windows.Forms.Button();
             this.radio_Replace = new System.Windows.Forms.RadioButton();
             this.radio_MergeNew = new System.Windows.Forms.RadioButton();
@@ -66,16 +66,15 @@
             this.btn_ImportSelect.UseVisualStyleBackColor = true;
             this.btn_ImportSelect.Click += new System.EventHandler(this.btn_ImportSelect_Click);
             // 
-            // btn_Close
+            // btn_Cancel
             // 
-            this.btn_Close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btn_Close.Location = new System.Drawing.Point(196, 195);
-            this.btn_Close.Name = "btn_Close";
-            this.btn_Close.Size = new System.Drawing.Size(75, 23);
-            this.btn_Close.TabIndex = 3;
-            this.btn_Close.Text = "Close";
-            this.btn_Close.UseVisualStyleBackColor = true;
-            this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
+            this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btn_Cancel.Location = new System.Drawing.Point(196, 195);
+            this.btn_Cancel.Name = "btn_Cancel";
+            this.btn_Cancel.Size = new System.Drawing.Size(75, 23);
+            this.btn_Cancel.TabIndex = 3;
+            this.btn_Cancel.Text = "Cancel";
+            this.btn_Cancel.UseVisualStyleBackColor = true;
             // 
             // btn_Import
             // 
@@ -86,17 +85,16 @@
             this.btn_Import.TabIndex = 4;
             this.btn_Import.Text = "Import";
             this.btn_Import.UseVisualStyleBackColor = true;
-            this.btn_Import.Click += new System.EventHandler(this.btn_Import_Click);
             // 
             // radio_Replace
             // 
             this.radio_Replace.AutoSize = true;
             this.radio_Replace.Location = new System.Drawing.Point(6, 26);
             this.radio_Replace.Name = "radio_Replace";
-            this.radio_Replace.Size = new System.Drawing.Size(238, 17);
+            this.radio_Replace.Size = new System.Drawing.Size(164, 17);
             this.radio_Replace.TabIndex = 5;
             this.radio_Replace.TabStop = true;
-            this.radio_Replace.Text = "Replace your boilerplate with the selected file";
+            this.radio_Replace.Text = "Replace with the selected file";
             this.radio_Replace.UseVisualStyleBackColor = true;
             // 
             // radio_MergeNew
@@ -141,12 +139,12 @@
             this.ClientSize = new System.Drawing.Size(284, 229);
             this.Controls.Add(this.grp_Duplicates);
             this.Controls.Add(this.btn_Import);
-            this.Controls.Add(this.btn_Close);
+            this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.btn_ImportSelect);
             this.Controls.Add(this.txt_ImportFile);
             this.Controls.Add(this.label1);
             this.Name = "ImportDialog";
-            this.Text = "Import Boilerplate";
+            this.Text = "Import Settings";
             this.grp_Duplicates.ResumeLayout(false);
             this.grp_Duplicates.PerformLayout();
             this.ResumeLayout(false);
@@ -159,7 +157,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txt_ImportFile;
         private System.Windows.Forms.Button btn_ImportSelect;
-        private System.Windows.Forms.Button btn_Close;
+        private System.Windows.Forms.Button btn_Cancel;
         private System.Windows.Forms.Button btn_Import;
         private System.Windows.Forms.RadioButton radio_Replace;
         private System.Windows.Forms.RadioButton radio_MergeNew;

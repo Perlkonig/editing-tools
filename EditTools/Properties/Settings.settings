@@ -7,12 +7,7 @@
     </Setting>
     <Setting Name="boilerplate" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;and/or&lt;/string&gt;
-  &lt;string&gt;AER style eschews "and/or." It introduces ambiguity. Either use "or both" or "but not both."&lt;/string&gt;
-  &lt;string&gt;(s)&lt;/string&gt;
-  &lt;string&gt;AER style does not support the use of "(s)." It is unnecessary. Both the Alberta and Canada Interpretation Acts state that words in the singular include the plural and vice-versa. Just use the plural.&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
     </Setting>
     <Setting Name="lastlang" Type="System.String" Scope="User">
       <Value Profile="(Default)">English (Canada)</Value>
@@ -22,6 +17,12 @@
     </Setting>
     <Setting Name="maxphraselen" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">6</Value>
+    </Setting>
+    <Setting Name="searches" Type="EditTools.Searches" Scope="User">
+      <Value Profile="(Default)">{"double spaces":{"Find":"  ","Replace":" ","Wildcards":false,"CaseSensitive":false,"ReplaceAll":true}}</Value>
+    </Setting>
+    <Setting Name="newboiler" Type="EditTools.Boilerplate" Scope="User">
+      <Value Profile="(Default)">{"(s)":{"Text":"Never use \"(s)\". Both the federal and provincial interpretation acts stipulate that the singular can be read as the plural and vice versa."},"and/or":{"Text":"Never use \"and/or.\" If clarity is critical, use constructs like \"X or Y or both\" or \"X or Y but not both.\" That said, in normal usage, one or the other is sufficient. Saying \"No food or drink allowed\" does not mean you can have both. Or saying \"Lawyers and law students may not enter\" does not mean that any one of them may."}}</Value>
     </Setting>
   </Settings>
 </SettingsFile>

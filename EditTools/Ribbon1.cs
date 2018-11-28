@@ -17,7 +17,27 @@ namespace EditTools
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
+            // Check for old boilerplate and migrate it over if it exists.
+            // This check will likely go away with the next major release.
+            StringCollection oldbp = Properties.Settings.Default.boilerplate;
+            if (oldbp.Count > 0)
+            {
+                Boilerplate bp = new Boilerplate();
+                Debug.WriteLine("Found old boilerplate. Moving them over.");
+                for (int i = 0; i < oldbp.Count - 1; i += 2)
+                {
+                    Comment c = new Comment();
+                    c.Text = oldbp[i + 1];
+                    bp.Dict.Add(oldbp[i], c);
+                }
+                Properties.Settings.Default.newboiler = bp;
+                oldbp.Clear();
+                Properties.Settings.Default.boilerplate = oldbp;
+                Properties.Settings.Default.Save();
+            }
+
             loadBoilerplate();
+            loadSearches();
 
             //Languages
             Word.Languages langs = Globals.ThisAddIn.Application.Languages;
@@ -46,23 +66,29 @@ namespace EditTools
 
         public void loadBoilerplate()
         {
-            //Boilerplate
             dd_Boilerplate.Items.Clear();
-            StringCollection bps = Properties.Settings.Default.boilerplate;
-            List<string> keys = new List<string>(); ;
-            for (int i = 0; i < bps.Count; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    keys.Add(bps[i]);
-                }
-            }
+            Boilerplate bp = Properties.Settings.Default.newboiler;
+            List<string> keys = bp.Dict.Keys.ToList();
             keys.Sort();
             foreach (string key in keys)
             {
                 RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
                 item.Label = key;
                 dd_Boilerplate.Items.Add(item);
+            }
+        }
+
+        public void loadSearches()
+        {
+            dd_Searches.Items.Clear();
+            Searches searches = Properties.Settings.Default.searches;
+            List<string> keys = searches.Dict.Keys.ToList();
+            keys.Sort();
+            foreach (string key in keys)
+            {
+                RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                item.Label = key;
+                dd_Searches.Items.Add(item);
             }
         }
 
@@ -93,44 +119,6 @@ namespace EditTools
             }
 
             MessageBox.Show("All text marked as '"+ item.Label +"'.");
-        }
-
-        private void btn_Export_Click(object sender, RibbonControlEventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.AddExtension = true;
-            sfd.DefaultExt = "xml";
-            sfd.CheckPathExists = true;
-            sfd.Filter = "XML files (*.xml)|*.xml";
-            sfd.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            sfd.OverwritePrompt = true;
-            sfd.Title = "Export Boilerplate Text";
-            sfd.FileName = "";
-            //sfd.RestoreDirectory = false;
-
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                using (XmlWriter writer = XmlWriter.Create(sfd.FileName))
-                {
-                    writer.WriteStartDocument();
-                    writer.WriteStartElement("boilerplate");
-                    StringCollection sc = Properties.Settings.Default.boilerplate;
-                    for (int i = 0; i < sc.Count - 1; i += 2)
-                    {
-                        writer.WriteStartElement("entry");
-                        writer.WriteAttributeString("key", sc[i]);
-                        writer.WriteString(sc[i + 1]);
-                        writer.WriteEndElement();
-                    }
-                    writer.WriteEndElement();
-                    writer.WriteEndDocument();
-                }
-                MessageBox.Show("Settings exported to " + sfd.FileName + ".");
-            }
-            else
-            {
-                MessageBox.Show("Export cancelled.");
-            }
         }
 
         private void btn_WordList_Click(object sender, RibbonControlEventArgs e)
@@ -386,22 +374,17 @@ namespace EditTools
         private void btn_ApplyBoilerplate_Click(object sender, RibbonControlEventArgs e)
         {
             //get the text from the settings
-            StringCollection bps = Properties.Settings.Default.boilerplate;
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-            for (int i = 0; i < bps.Count - 1; i+=2)
-            {
-                dict.Add(bps[i], bps[i + 1]);
-            }
+            Boilerplate bp = Properties.Settings.Default.newboiler;
 
             //Find out which option is selected
             RibbonDropDownItem item = this.dd_Boilerplate.SelectedItem;
-            if (dict.ContainsKey(item.Label))
+            if (bp.Dict.ContainsKey(item.Label))
             {
                 Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
                 Word.Selection selection = Globals.ThisAddIn.Application.Selection;
                 if (selection != null && selection.Range != null)
                 {
-                    selection.Comments.Add(selection.Range, dict[item.Label]);
+                    selection.Comments.Add(selection.Range, bp.Dict[item.Label].Text);
                 }
                 else
                 {
@@ -731,6 +714,52 @@ namespace EditTools
                 comment.Author = eb_AuthorName.Text;
                 comment.Initial = eb_AuthorInit.Text;
             }
+        }
+
+        private void btn_ManageSearches_Click(object sender, RibbonControlEventArgs e)
+        {
+            ManageSearches ms = new ManageSearches();
+            ms.ShowDialog();
+            loadSearches();
+        }
+
+        private void btn_ExecuteSearch_Click(object sender, RibbonControlEventArgs e)
+        {
+            //get the text from the settings
+            Searches searches = Properties.Settings.Default.searches;
+
+            //Find out which option is selected
+            RibbonDropDownItem item = this.dd_Searches.SelectedItem;
+            if (searches.Dict.ContainsKey(item.Label))
+            {
+                Search search = searches.Dict[item.Label];
+                if (search.Replace == null)
+                {
+                    Globals.ThisAddIn.Application.Selection.Find.Execute(FindText: search.Find, MatchCase: search.CaseSensitive, MatchWildcards: search.Wildcards, Wrap: Word.WdFindWrap.wdFindAsk);
+                }
+                else
+                {
+                    Word.WdReplace mode = Word.WdReplace.wdReplaceOne;
+                    if (search.ReplaceAll)
+                    {
+                        mode = Word.WdReplace.wdReplaceAll;
+                    }
+                    Globals.ThisAddIn.Application.Selection.Find.Execute(FindText: search.Find, MatchCase: search.CaseSensitive, MatchWildcards: search.Wildcards, Wrap: Word.WdFindWrap.wdFindAsk, ReplaceWith: search.Replace, Replace: mode);
+                }
+            }
+            else
+            {
+                MessageBox.Show("An error occurred when finding your saved search. Please let Aaron know!");
+                return;
+            }
+
+        }
+
+        private void btn_ManageBoiler_Click(object sender, RibbonControlEventArgs e)
+        {
+            ManageBoiler mb = new ManageBoiler();
+            mb.ShowDialog();
+            loadBoilerplate();
         }
     }
 }
